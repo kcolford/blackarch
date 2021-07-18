@@ -1,5 +1,5 @@
-kcptun
-metasploit
-packer
-shellcheck
-wpscan
+ghidra
+hashcat
+kismet
+rfdump
+valgrind

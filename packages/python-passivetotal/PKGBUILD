@@ -4,15 +4,15 @@
 pkgbase=python-passivetotal
 pkgname=('python2-passivetotal' 'python-passivetotal')
 _pkgname=passivetotal
-pkgver=2.3.0
+pkgver=2.5.1
 pkgrel=1
 pkgdesc='Client for the PassiveTotal REST API.'
 arch=('any')
 url='https://pypi.org/project/passivetotal/#files'
 license=('GPL2')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/1a/b5/4f03952dd00e60d6f33730fe66a6057b2b8242843897b5c1dc6e456d3f95/$_pkgname-$pkgver.tar.gz")
-sha512sums=('167d78d84ccb84521227c125a931efcec6a5ae562c4d84e944f3dd57c6e440d59a4572e0fe6f9304e820fac1713878cc3aac33498bc008f55e034e58f4ce4ab7')
+source=("https://files.pythonhosted.org/packages/bc/b5/e4d4a5d1120e9f4645f38f4ee324ef3336f470f1bfd907c8e3f3221ad4de/$_pkgname-$pkgver.tar.gz")
+sha512sums=('eca51a778731d88bdc8ba10e0f3ecee730c764319e67b674c946c86a8761c091783592565ee5991d5f6caac2ae6f6dd8084a1689c468db8c0129e6c58ea0eff2')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

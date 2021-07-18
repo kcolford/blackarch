@@ -4,15 +4,15 @@
 pkgbase=python-requests-cache
 pkgname=('python2-requests-cache' 'python-requests-cache')
 _pkgname=requests-cache
-pkgver=0.6.2
+pkgver=0.7.1
 pkgrel=1
 pkgdesc='Persistent cache for requests library.'
 arch=('any')
 url='https://pypi.org/project/requests-cache/#files'
 license=('BSD')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/3d/f3/d0755be42181f7b123c0db6a836f08b6eaa4f4ac4d4b04cb08a470eb140f/$_pkgname-$pkgver.tar.gz")
-sha512sums=('45d11756f70bd3156f8986b61097b1ee522e742856782301e7362fed09f166769ccd8373415c59ca0cd75e78a929cd3bd19e77a88781626dd249d16811ba8876')
+source=("https://files.pythonhosted.org/packages/47/c8/27af81e3aa2502d61d46670386ddce6047dfc08a805b9de92b917cf528f4/$_pkgname-$pkgver.tar.gz")
+sha512sums=('6b2ab25e5d944661a372678667f7e1d7080f8eef29e44717f1258b97dfc8a5caa6eca52e75f3af9a39faded6619b7bac37239850bca90b64de5fca88684df8dc')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

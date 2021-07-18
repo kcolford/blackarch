@@ -3,7 +3,7 @@
 
 pkgname=python-google-api-core
 _pkgname=google-api-core
-pkgver=1.26.3
+pkgver=1.31.0
 pkgrel=1
 pkgdesc='Google API client core library.'
 arch=('any')
@@ -11,8 +11,8 @@ url='https://pypi.org/project/google-api-core/#files'
 license=('Apache')
 depends=('python' 'python-googleapis-common-protos' 'python-pytz')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/1f/11/5cd595fcbf4c85d4ab111d5e335ae52e811d910be93dafc7d4f37e6f4ed1/$_pkgname-$pkgver.tar.gz")
-sha512sums=('63d5fbdbc5e4f18db59c829a2531ac2d9106e511123361b4b176a1f0c1f8e99068f67a66380f87a48f6bb1d5fb80f29819a2b7bc88f2f8c71a0da76f392021ca')
+source=("https://files.pythonhosted.org/packages/26/fe/434cf8d564c6117d9cacd11d8990a1e1a08525e671932d654c811d749c2d/$_pkgname-$pkgver.tar.gz")
+sha512sums=('b4817997c3ce72a1883b8e6efbd7ad9a45ed0129b538fe32a80363d548d2853acef53c0aa1cec215fbd2864e28c169fc7d0c96bfacb21c7dc0276e71272d65b1')
 
 build() {
   cd "$_pkgname-$pkgver"

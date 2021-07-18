@@ -3,7 +3,7 @@
 
 pkgname=python-cle
 _pkgname=cle
-pkgver=9.0.6790
+pkgver=9.0.9031
 pkgrel=1
 pkgdesc='Interface to analyze what they are and what they would look like in memory.'
 arch=('any')
@@ -13,8 +13,8 @@ depends=('python' 'python-pefile' 'python-cffi' 'python-pyvex'
          'python-minidump' 'python-sortedcontainers' 'python-pyvex'
          'python-pyelftools')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/e3/39/5197bf45e72fc135c8bee69ea2dd0d8b7857390046efd1cb3a6ac766cea1/$_pkgname-$pkgver.tar.gz")
-sha512sums=('d61d067ad8406e48cc23541c99ebe088e622b93ddddf77f477cc7d657276980f66ffc8ff16ce9d14a292e8f310f17a86b9193682542241abbeefd22a5b28fa88')
+source=("https://files.pythonhosted.org/packages/10/f4/345cffb8025679bc3ed7dc0503d964cb247b51274243e590fb8ada25d464/$_pkgname-$pkgver.tar.gz")
+sha512sums=('72971fd4db5bf8a94d222ffb2de4bee40ea8919607fb91b5374b6aacbf9659b56b8e9023ca74a61700e2f7b96cfe19d698b22886e164af3db58d124b61ebcdb8')
 
 build() {
   cd "$_pkgname-$pkgver"
