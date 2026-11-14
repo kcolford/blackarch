@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=tomcatwardeployer
-pkgver=93.fc3ac28
-pkgrel=1
+pkgver=98.4535e64
+pkgrel=3
 pkgdesc='Apache Tomcat auto WAR deployment & pwning penetration testing tool.'
 groups=('blackarch' 'blackarch-exploitation' 'blackarch-automation'
         'blackarch-webapp')

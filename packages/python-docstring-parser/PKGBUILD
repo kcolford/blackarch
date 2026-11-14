@@ -3,27 +3,38 @@
 
 pkgname=python-docstring-parser
 _pkgname=docstring_parser
-pkgver=0.13
-pkgrel=2
+pkgver=0.18.0
+pkgrel=1
 pkgdesc='Parse Python docstrings. Currently support ReST, Google, and Numpydoc-style docstrings.'
 arch=('any')
 url='https://pypi.org/project/docstring-parser/#files'
 license=('MIT')
 depends=('python')
-makedepends=('python-setuptools')
+makedepends=('python-build' 'python-pip')
 options=(!emptydirs)
-source=("https://files.pythonhosted.org/packages/e7/18/8476fa1363bf038caf7b88cab473c6f9a821a5886c98364bf43d6fdea8a7/docstring_parser-$pkgver.tar.gz")
-sha512sums=('ad29c0844dbc16b4f845b94c7b2f82a0106aa165d264490d8952f48c9a763bf0738ff34a333c21d341cd1c0b1b2d78d70458959ecce26727223bd2777725a15f')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/docstring_parser-$pkgver.tar.gz")
+sha512sums=('2a8406b0ea00ea9a74d5e391eee39511494f1d9e0977704b7bbf651cf6964589897788ca884dcf48e6174c97031ddf8791d62cda0437d39471d9392b074b7d28')
 
 build() {
   cd $_pkgname-$pkgver
 
-  python setup.py build
+  python -m build --wheel --outdir="$startdir/dist"
 }
 
 package() {
   cd $_pkgname-$pkgver
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  pip install \
+    --verbose \
+    --disable-pip-version-check \
+    --no-warn-script-location \
+    --ignore-installed \
+    --no-compile \
+    --no-deps \
+    --root="$pkgdir" \
+    --prefix=/usr \
+    --no-index \
+    --find-links="file://$startdir/dist" \
+    $_pkgname
 }
 

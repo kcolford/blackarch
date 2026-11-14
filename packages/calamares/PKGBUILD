@@ -1,59 +1,65 @@
 # This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
-#
-# This PKGBUILD was extracted from Manjaro Linux and adapted to our style
-#
-# Old Maintainer: Philip Müller <philm[at]manjaro[dot]org>
+# See COPYING for license details.
 
 pkgname=calamares
-pkgver=3.2.52
+pkgver=3.4.3
 pkgrel=1
+epoch=3
 pkgdesc='Distribution-independent installer framework.'
-url='https://github.com/calamares/calamares'
+url='https://codeberg.org/Calamares/calamares'
 arch=('x86_64' 'aarch64')
-license=('LGPL')
-depends=('kconfig' 'kcoreaddons' 'kiconthemes' 'ki18n' 'kio' 'solid' 'yaml-cpp'
-         'kpmcore' 'mkinitcpio-openswap' 'boost-libs' 'ckbcomp' 'hwinfo'
-         'qt5-svg' 'polkit-qt5' 'gtk-update-icon-cache' 'plasma-framework'
-         'qt5-xmlpatterns' 'squashfs-tools' 'libpwquality' 'appstream-qt' 'icu')
-makedepends=('extra-cmake-modules' 'qt5-tools' 'qt5-translations' 'git' 'boost')
-backup=('usr/share/calamares/modules/bootloader.conf'
-        'usr/share/calamares/modules/displaymanager.conf'
-        'usr/share/calamares/modules/initcpio.conf'
-        'usr/share/calamares/modules/unpackfs.conf')
-source=("https://github.com/calamares/$pkgname/archive/v$pkgver.tar.gz")
-sha512sums=('41d20bc249cd5894c05d6516c75ac39c57876f0a880e993230b3c38347f31164872c97d8ebfc1ef69a9c8ccb1e6a0ce9c3bed5fcaa8addf3b6a38db9003721b5')
+license=('BSD-2-Clause' 'CC-BY-4.0' 'CC0-1.0' 'GPL-3.0-or-later'
+         'LGPL-2.1-only' 'LGPL-3.0-or-later' 'MIT')
+depends=(
+  'kconfig' 'kcoreaddons' 'kiconthemes' 'ki18n' 'kio' 'solid'
+  'yaml-cpp' 'kpmcore' 'mkinitcpio-openswap'
+  'boost-libs' 'ckbcomp' 'hwinfo'
+  'qt6-base' 'qt6-declarative' 'qt6-svg'
+  'polkit-qt6' 'gtk-update-icon-cache'
+  'squashfs-tools' 'libpwquality'
+  'icu' 'efibootmgr' 'kdbusaddons'
+  'python' 'python-yaml' 'kcrash'
+)
+makedepends=(
+  'extra-cmake-modules' 'qt6-tools' 'qt6-translations'
+  'git' 'boost' 'kdbusaddons'
+  'python' 'ninja' 'cmake'
+)
+source=("https://codeberg.org/Calamares/calamares/releases/download/v$pkgver/$pkgname-$pkgver.tar.gz")
+sha512sums=('a0c570cea1117cd70e839afad2ea4ac7e3a674a58bfc546a7890eb268b167272c85bdb376e17e7a02b7317571580bad105fcc5903c3353d7b260f470dea3a311')
 
 prepare() {
   cd "$pkgname-$pkgver"
 
-  sed -i -e 's/"Install configuration files" OFF/"Install configuration files" ON/' CMakeLists.txt
-  _ver="$(cat CMakeLists.txt | grep -m3 -e "  VERSION" |
-  grep -o "[[:digit:]]*" | xargs | sed s'/ /./g')"
-  printf 'Version: %s-%s' "$_ver" "$pkgrel"
-  sed -i -e "s|\${CALAMARES_VERSION_MAJOR}.\${CALAMARES_VERSION_MINOR}.\${CALAMARES_VERSION_PATCH}|${_ver}-${pkgrel}|g" CMakeLists.txt
-  sed -i -e "s|CALAMARES_VERSION_RC 1|CALAMARES_VERSION_RC 0|g" CMakeLists.txt
-  sed -i -e "s|TryExec=calamares|TryExec=pkexec /usr/bin/calamares|g" calamares.desktop
+  sed -i -E 's/(CALAMARES_VERSION_RC[[:space:]]+)1/\10/' CMakeLists.txt
 }
 
 build() {
   cd "$pkgname-$pkgver"
 
-  mkdir -p build && cd build
-
-  cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=lib -DWITH_PYTHONQT:BOOL=ON \
+  cmake -S . -B build \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_TESTING=OFF \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DWITH_QT6=ON \
+    -DWITH_PYTHONQT=OFF \
+    -DWITH_KF5DBus=OFF \
     -DBoost_NO_BOOST_CMAKE=ON \
-    -DSKIP_MODULES="tracking webview interactiveterminal initramfs \
-      initramfscfg dracut dracutlukscfg dummyprocess dummypython dummycpp \
-      dummypythonqt services-openrc"
+    -DCMAKE_DISABLE_FIND_PACKAGE_PartitionManager=ON \
+    -DSKIP_MODULES="webview tracking interactiveterminal initramfs \
+      initramfscfg dracut dracutlukscfg \
+      dummyprocess dummypython dummycpp \
+      dummypythonqt services-openrc \
+      keyboardq localeq welcomeq"
 
-  make
+  cmake --build build
 }
 
 package() {
   cd "$pkgname-$pkgver/build"
 
-  make DESTDIR="$pkgdir" install
+  DESTDIR="$pkgdir" cmake --install .
 }
 
-sha512sums=('24f154a453c72fc2b75d35e0b37eb4c840034abceb09d40b613a07fab11068d40a83ce586b89ac7a1a03fee9ccb46f01428a0e94e2f683037d4282808ab85836')

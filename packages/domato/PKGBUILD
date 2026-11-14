@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=domato
-pkgver=96.7625d1d
-pkgrel=1
+pkgver=133.fadff39
+pkgrel=4
 pkgdesc='DOM fuzzer.'
 groups=('blackarch' 'blackarch-fuzzer')
 arch=('any')

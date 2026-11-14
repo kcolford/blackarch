@@ -2,17 +2,19 @@
 # See COPYING for license details.
 
 pkgname=python-pyexcel-xlsx
-_pkgname=pyexcel-xlsx
-pkgver=0.6.0
-pkgrel=3
+_pkgname=pyexcel_xlsx
+pkgver=0.6.1
+pkgrel=1
 pkgdesc='A wrapper library to read, manipulate and write data in xlsx and xlsmformat.'
 arch=('any')
 url='https://pypi.org/project/pyexcel-xlsx/#files'
-license=('BSD')
+license=('BSD-3-Clause')
 depends=('python' 'python-pyexcel-io' 'python-openpyxl')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/a2/37/04c3f339a775e9bfa852e50e781b8ba04a31a1ea5a3826c4b46f9874adad/$_pkgname-$pkgver.tar.gz")
-sha512sums=('e241766d52d35c5d68fc05e391302fc2bb752f722d92c50e69e2efc39f4373403d975d6aae72703873548efab629f4bee74f40c9f457c2d00e2289247130fc8e')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('63af47b1372c37a7098ad56e033726387d9b131632b3bfb2c18e2fb560f822c68b3d84c69e72a77e04b1c1d21b5e81a5f50efb70a2b6f13efe637ab8aef627c5')
 
 prepare(){
   cd "$_pkgname-$pkgver"
@@ -24,12 +26,12 @@ prepare(){
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

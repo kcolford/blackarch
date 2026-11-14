@@ -2,22 +2,23 @@
 # See COPYING for license details.
 
 pkgname=pe-bear
-pkgver=0.5.5.3
+_pkgname=PE-bear
+pkgver=0.7.2
 pkgrel=1
 pkgdesc='A freeware reversing tool for PE files.'
-url='https://github.com/hasherezade/pe-bear-releases/'
+url='https://github.com/hasherezade/pe-bear'
 groups=('blackarch' 'blackarch-windows' 'blackarch-malware' 'blackarch-binary'
         'blackarch-reversing' 'blackarch-disassembler')
 license=('custom:unknown')
 arch=('any')
-source=("https://github.com/hasherezade/pe-bear-releases/releases/download/$pkgver/PE-bear_${pkgver}_x64_win_vs17.zip")
-sha512sums=('5139e16deb4424c8a6a7406c0ad377e965dddb419fa73aa7265d55503cc02a989f46c2dbd8bae2fc3e4182a07509b6ee1b43e4287efd0ddd4aaebd43f1c806fd')
+source=("https://github.com/hasherezade/pe-bear/releases/download/v$pkgver/${_pkgname}_${pkgver}_qt6_x64_win_vs22.zip")
+sha512sums=('9389466e2bcda7f19d8a79c65de36bc4db279e231082face20cf89feeb5dc98e7bd51aef0c19a9a9d470a933ef35773bc8bfe31c3b74a83178e8f7a6c8c79730')
 
 package() {
   install -dm 755 "$pkgdir/usr/share/windows/$pkgname"
 
-  rm -f "PE-bear_${pkgver}_x64_win_vs17.zip" \
-    "styles/PE-bear_${pkgver}_x64_win_vs17.zip"
+  rm -f "${_pkgname}_${pkgver}_x64_win_vs17.zip" \
+    "styles/${_pkgname}_${pkgver}_x64_win_vs17.zip"
 
   cp -a * "$pkgdir/usr/share/windows/$pkgname/"
 }

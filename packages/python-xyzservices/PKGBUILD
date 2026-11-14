@@ -1,0 +1,31 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-xyzservices
+_pkgname=${pkgname#python-}
+pkgver=2025.11.0
+pkgrel=2
+pkgdesc='Provides a repository of available XYZ services offering raster basemap tiles.'
+arch=('any')
+url='https://github.com/geopandas/xyzservices'
+license=('BSD-3-Clause')
+depends=('python')
+makedepends=('python-setuptools-scm' 'python-wheel' 'python-build'
+             'python-installer')
+source=("https://github.com/geopandas/xyzservices/releases/download/$pkgver/$_pkgname-$pkgver.tar.gz")
+sha512sums=('78533b9036a6ca9f5e6e73326223f24405d9b55dc1ff43c360e4ab7b07343a7dc16e49643c43aaf27410efd680899987da2bc3f6df9e6e4120df96635c6e9e75')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+
+  install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+

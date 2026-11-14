@@ -1,0 +1,29 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-fastecdsa
+_pkgname=fastecdsa
+pkgver=4.0.0
+pkgrel=1
+pkgdesc='Fast elliptic curve digital signatures.'
+arch=('x86_64' 'aarch64')
+url='https://pypi.org/project/fastecdsa/#files'
+license=('Unlicense')
+depends=('python')
+makedepends=('python-setuptools')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('73aeeb81ad5ecf30b7c1d4bbda528b8414abe665baa2546b41899ab5bff0d4efe541109f5d499b0f08e18819cb838d31b7d1f48c7892a6d256ef3b3a0f60225c')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py build
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+}
+

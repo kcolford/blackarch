@@ -1,48 +1,30 @@
-# This file is part of BlackArch Linux ( https://blackarch.org )
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
 # See COPYING for license details.
 
-pkgbase=python-flask-httpauth
-pkgname=('python2-flask-httpauth' 'python-flask-httpauth')
+pkgname=python-flask-httpauth
 _pkgname=Flask-HTTPAuth
-pkgver=4.5.0
-pkgrel=2
-pkgdesc='Basic and Digest HTTP authentication for Flask routes.'
+pkgver=4.8.1
+pkgrel=1
+pkgdesc='Basic, Digest and Token HTTP authentication for Flask routes.'
+url='https://github.com/miguelgrinberg/Flask-HTTPAuth'
 arch=('any')
-url='https://pypi.org/project/Flask-httpauth/#files'
-makedepends=('python2-setuptools' 'python-setuptools')
 license=('MIT')
-source=("https://files.pythonhosted.org/packages/d9/c8/b4d278366fcb1c25d2b8552a5f4764961af46a794135499079b6ff9f4895/Flask-HTTPAuth-$pkgver.tar.gz")
-sha512sums=('830b23004b1f03017c43b5e73630edc3e18f60c92ff2b1db26c4238f4e25c746ff9481edd0fe6ded6114940d1a4ed50942c1fd9916971b78f2e39d95c0ac3222')
-
-prepare() {
-  cp -a "$_pkgname-$pkgver"{,-2}
-}
+depends=('python' 'python-flask' 'python-setuptools')
+checkdepends=('python-pytest')
+source=("https://github.com/miguelgrinberg/$_pkgname/archive/v$pkgver/$pkgname-$pkgver.tar.gz")
+sha512sums=('570c4f65c77262dabead10633391c80568e957a6b507419fb427bff9fab95dc0f1f4825500a817c7500d1106279439a1d4784d24a230e23a574d965b59f42a03')
 
 build() {
-  cd "$_pkgname-$pkgver-2"
-
-  python2 setup.py build
-
-  cd "$srcdir/$_pkgname-$pkgver"
+  cd "$_pkgname-$pkgver"
 
   python setup.py build
 }
 
-package_python2-flask-httpauth() {
-  depends=('python2' 'python2-flask')
-
-  cd "$_pkgname-$pkgver-2"
-
-  python2 setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 \
-    --skip-build
-}
-
-package_python-flask-httpauth() {
-  depends=('python' 'python-flask')
-
+package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 \
-    --skip-build
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+
+  install -Dm 644 LICENSE -t "$pkgdir/usr/share/licenses/$pkgname"
 }
 

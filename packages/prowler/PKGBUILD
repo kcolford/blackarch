@@ -2,8 +2,9 @@
 # See COPYING for license details.
 
 pkgname=prowler
-pkgver=1870.432632d
+pkgver=9353.67aa941012
 pkgrel=1
+epoch=1
 pkgdesc='Tool for AWS security assessment, auditing and hardening.'
 groups=('blackarch' 'blackarch-defensive' 'blackarch-scanner')
 arch=('any')

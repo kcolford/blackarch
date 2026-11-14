@@ -2,44 +2,48 @@
 # See COPYING for license details.
 
 pkgname=empire
-pkgver=2618.86921fbb
+pkgver=v6.7.1.r0.gca5b774
 pkgrel=1
-epoch=2
+epoch=3
 pkgdesc='A PowerShell and Python post-exploitation agent.'
-groups=('blackarch' 'blackarch-automation')
 arch=('any')
+groups=('blackarch' 'blackarch-automation')
 url='https://github.com/BC-SECURITY/Empire'
-license=('BSD')
-depends=('python' 'python-urllib3' 'python-requests' 'python-iptools' 'tk'
-         'python-pydispatcher' 'python-flask' 'python-macholib' 'python-dropbox'
-         'python-zlib_wrapper' 'python-netifaces' 'python-m2crypto'
-         'python-jinja' 'python-cryptography' 'python-pefile' 'python-xlutils'
-         'python-pyminifier' 'python-pycryptodome' 'python-simplejson'
-         'python-xlrd' 'python-xlwt' 'python-bcrypt' 'java-environment'
-         'python-flask-socketio' 'python-setuptools' 'pyinstaller' 'python-jq'
-         'python-pycryptodomex' 'python-pyparsing' 'python-sqlalchemy'
-         'python-pyaml' 'python-prompt_toolkit' 'python-sqlalchemy-utc'
-         'python-pymysql' 'python-poetry' 'python-docopt' 'python-humanize'
-         'python-pydantic' 'python-socketio' 'python-terminaltables' 'donut')
-makedepends=('git')
-source=("$pkgname::git+https://github.com/BC-SECURITY/Empire.git"
-        'https://files.pythonhosted.org/packages/0d/1d/6cc4bd4e79f78be6640fab268555a11af48474fac9df187c3361a1d1d2f0/pyOpenSSL-19.1.0.tar.gz'
-        'setup_database.py.patch')
-sha512sums=('SKIP'
-            '4acd96f287d72eb11bd812697d28cd6eb6a96a4653248b65f967187830a6b17cc1254775a18a3405469f3d45abdae6f02d165f2f35f035f3174c2826fba82916'
-            '9ffc3dc5d6a1dfd5b71cd22a0878a0231958938cb939e5fda5467c301fb4837ff96a299c2cbf2b2cc232fd8dd340c9086130e1067870c8c4272d7cc05e3954b4')
+license=('BSD-3-Clause')
+depends=('python' 'mariadb' 'openssl')
+makedepends=('git' 'python-setuptools' 'python-pip')
+optdepends=(
+  'xar: enables generating .dmg stagers'
+  'bomutils: enables generating .dmg stagers'
+  'jdk-openjdk: enables generating .jar stager'
+  'nim: enables generating nim stagers'
+)
+install="empire.install"
+source=("$pkgname::git+https://github.com/BC-SECURITY/Empire.git")
+sha512sums=('SKIP')
 
 pkgver() {
   cd $pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
 }
 
 prepare() {
   cd $pkgname
 
-  # need by empire
-  cp -r "$srcdir/pyOpenSSL-19.1.0/src/OpenSSL" OpenSSL
+  git submodule update --init --recursive
+
+  # tmp+dirty fix
+  sed -i 's|">=3.13,<3.14"|">=3.13"|g' pyproject.toml
+
+  # grab openssl certs
+  cd setup
+  bash ./cert.sh
 }
 
 package() {
@@ -48,16 +52,26 @@ package() {
   install -dm 755 "$pkgdir/usr/bin/"
   install -dm 755 "$pkgdir/usr/share/$pkgname"
 
-  install -Dm 644 -t "$pkgdir/usr/share/doc/$pkgname/" README.md changelog
+  install -Dm 644 -t "$pkgdir/usr/share/doc/$pkgname/" *.md
   install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 
-  rm changelog LICENSE README.md
+  rm changelog LICENSE CHANGELOG.md
 
   cp -a * "$pkgdir/usr/share/$pkgname/"
+
+  cat > "$pkgdir/usr/bin/$pkgname" << EOF
+#!/bin/sh
+cd /usr/share/$pkgname
+source /usr/share/$pkgname/venv/bin/activate
+exec python empire.py "\$@"
+EOF
+
+  chmod +x "$pkgdir/usr/bin/$pkgname"
 
   cat > "$pkgdir/usr/bin/$pkgname-server" << EOF
 #!/bin/sh
 cd /usr/share/$pkgname
+source /usr/share/$pkgname/venv/bin/activate
 exec python empire.py server "\$@"
 EOF
 
@@ -66,6 +80,7 @@ EOF
   cat > "$pkgdir/usr/bin/$pkgname-client" << EOF
 #!/bin/sh
 cd /usr/share/$pkgname
+source /usr/share/$pkgname/venv/bin/activate
 exec python empire.py client "\$@"
 EOF
 

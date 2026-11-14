@@ -2,29 +2,31 @@
 # See COPYING for license details.
 
 pkgname=python-faraday-plugins
-_pkgname=faraday-plugins
-pkgver=1.6.2
+_pkgname=faraday_plugins
+pkgver=1.31.0
 pkgrel=1
 pkgdesc='Faraday plugins package.'
 arch=('any')
 url='https://pypi.org/project/faraday-plugins/#files'
-license=('GPL3')
+license=('GPL-3.0-or-later')
 depends=('python' 'python-html2text' 'python-click' 'python-simplejson'
          'python-requests' 'python-lxml' 'python-beautifulsoup4' 'python-dateutil'
          'python-pytz')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/85/13/d84facc4fd4d5f0eb3e89121e9e2f58216ddf5d26e3c3b6dd7b54dd70a96/$_pkgname-$pkgver.tar.gz")
-sha512sums=('b963d1d57640b8253fcc8ea199d832fbd6467861bd0435d4897eab33eb015e381fdc40eab7646caa6c75b8bcdae5e9ada7db649615a2ec347d1d940cad3b600e')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('f48c78618e23ca5f87336b8d5140a5101e39018b3775a84edfb3deb18062dbef0c7737433cf3a737887f3a22ed99442167606152be196ee3332f0969e1daacdc')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

@@ -1,0 +1,36 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-glom
+_pkgname=glom
+pkgver=25.12.0
+pkgrel=1
+pkgdesc='A declarative object transformer and formatter, for conglomerating nested data.'
+arch=('any')
+url='https://pypi.org/project/glom/'
+license=('BSD-3-Clause')
+depends=('python' 'python-attrs' 'python-boltons' 'python-cachetools'
+         'python-chardet' 'python-colorama' 'python-coverage' 'python-distlib'
+         'python-exceptiongroup' 'python-face' 'python-filelock'
+         'python-importlib-metadata' 'python-iniconfig' 'python-packaging'
+         'python-platformdirs' 'python-pluggy' 'python-pyproject-api'
+         'python-pytest' 'python-pyyaml' 'python-tomli' 'python-tox'
+         'python-typing_extensions' 'python-zipp')
+optdepends=('python-yaml: YAML support')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('6c14f24067233b40c668cebe6bd323a86b76bcca39bbb8552b56d8b705bbd05a7a0c2bc01a4d6f2d37dacf498b578d399baa71e2857a96910550b3775f640ba1')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}

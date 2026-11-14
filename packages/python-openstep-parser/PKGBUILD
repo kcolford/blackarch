@@ -1,0 +1,28 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-openstep-parser
+_pkgname=openstep_parser
+pkgver=2.0.3
+pkgrel=2
+pkgdesc='OpenStep plist reader into python objects.'
+arch=('any')
+url='https://pypi.org/project/openstep-parser/#files'
+license=('MIT')
+depends=('python' 'python-nose' 'python-coverage')
+makedepends=('python-setuptools')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('63d0ac06dfaf9d3152eecafc21599be3eb4fe4e19339ae40b91fca154b38d9baefb173278cd7267e176cdb5d26a4764ddd7f9f4bffd871e423155eb50da30fff')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py build
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+}
+

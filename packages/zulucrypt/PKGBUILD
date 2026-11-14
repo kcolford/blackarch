@@ -2,38 +2,45 @@
 # See COPYING for license details.
 
 pkgname=zulucrypt
-_name=zuluCrypt
-pkgver=6.0.0
+_pkgname=zuluCrypt
+pkgver=7.1.1
 pkgrel=1
 pkgdesc='Front end to cryptsetup and tcplay and it allows easy management of encrypted block devices.'
 groups=('blackarch' 'blackarch-crypto')
-arch=('x86_64')
+arch=('x86_64' 'aarch64')
 url='https://github.com/mhogomchungu/zuluCrypt'
-license=('GPL')
-depends=('cryptsetup' 'libpwquality' 'libsecret' 'libxkbcommon-x11' 'qt5-base')
+license=('GPL-2.0-or-later')
+depends=('cryptsetup' 'qt5-base' 'libpwquality' 'libsecret' 'libxkbcommon-x11'
+         'util-linux')
+optdepends=('kwalletmanager: retrieve volume keys from kde kwallet')
+conflicts=('zulucrypt-git')
 makedepends=('cmake')
-source=("https://github.com/mhogomchungu/zuluCrypt/releases/download/$pkgver/$_name-$pkgver.tar.xz")
-sha512sums=('99a4453150c56413c638fb7a2b6fa9e79542e5e37040f097e2e04329aa3e33a8b6d8fa8634994e2ad8b11267450b730f78c7d89d4a4b356c39ee516d4a6571bf')
+source=("https://github.com/mhogomchungu/zuluCrypt/releases/download/$pkgver/$_pkgname-$pkgver.tar.xz")
+sha512sums=('e65aab2ef2edf0f45dcceb48cb35d2c0bf8fd1d1ab92b412562b35bf43b01d5e3ded12eabf3dc8f3e69bc400b8d09305a35ed58f83a8451848da1f7c1751d0d6')
 
 build() {
-  cd "$_name-$pkgver"
+  cd "$_pkgname-$pkgver"
 
   mkdir -p build
   cd build
-
-  cmake -DCMAKE_INSTALL_PREFIX=/usr/ -DLIB_SUFFIX=lib -DNOGUI=false -DQT5=true \
-    -DHOMEMOUNTPREFIX=false -DCMAKE_BUILD_TYPE=release . ..
-
+  cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DLIB_SUFFIX=lib \
+    -DNOGUI=false \
+    -DQT5=true \
+    -DHOMEMOUNTPREFIX=false \
+    -DCMAKE_BUILD_TYPE=release \
+    -DWITH_UUID=e2fs . ..
   make
 }
 
 package() {
-  cd "$_name-$pkgver"
+  cp "$_pkgname-$pkgver/changelog" ../"${pkgname}.changelog"
 
-  install -Dm 644 -t "$pkgdir/usr/share/doc/$pkgname/" changelog README.md
-  install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
-
-  cd build
+  cd "$_pkgname-$pkgver/build"
   make DESTDIR="$pkgdir" install
+
+  mkdir -p "$pkgdir/etc/modules-load.d"
+  echo 'loop' > "$pkgdir/etc/modules-load.d/$pkgname.conf"
 }
 

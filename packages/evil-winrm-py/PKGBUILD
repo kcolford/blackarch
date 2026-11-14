@@ -1,0 +1,33 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=evil-winrm-py
+_pkgname=${pkgname//-/_}
+pkgver=1.7.0
+pkgrel=1
+pkgdesc='WinRM shell for Windows and Active Directory pentesting.'
+arch=('any')
+url='https://github.com/adityatelange/evil-winrm-py'
+license=('MIT')
+groups=('blackarch' 'blackarch-windows' 'blackarch-exploitation'
+        'blackarch-backdoor')
+depends=('python' 'python-pypsrp' 'python-prompt_toolkit' 'python-tqdm')
+makedepends=('python-build' 'python-installer' 'python-wheel' 'python-setuptools')
+optdepends=('python-gssapi: Kerberos authentication support'
+            'python-krb5: Kerberos authentication support'
+            'python-mcp: MCP server support')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('c344290bbf14073f8f67db665c46033fc1c3dbc15dd24865972caa2c5aefbde69513790695b112503442f9a45acd4ab05ac827844c523447e1b52f2a07181093')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
+

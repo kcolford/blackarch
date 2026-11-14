@@ -2,14 +2,14 @@
 # See COPYING for license details.
 
 pkgname=bagbak
-pkgver=140.570f0be
+pkgver=344.39621f9
 pkgrel=1
 pkgdesc='Yet another frida based App decryptor.'
 arch=('any')
 groups=('blackarch' 'blackarch-mobile' 'blackarch-reversing' 'blackarch-binary')
 url='https://github.com/ChiChou/bagbak'
 license=('Apache')
-depends=('nodejs-lts-gallium' 'zip')
+depends=('nodejs' 'zip')
 makedepends=('npm' 'git')
 source=("git+https://github.com/ChiChou/$pkgname.git")
 sha512sums=('SKIP')

@@ -2,16 +2,17 @@
 # See COPYING for license details.
 
 pkgname=httpgrep
-pkgver=2.3
-pkgrel=2
+pkgver=4.8
+pkgrel=1
 groups=('blackarch' 'blackarch-webapp' 'blackarch-scanner')
-pkgdesc='A python tool which scans for HTTP servers and finds given strings in HTTP body and HTTP response headers.'
+pkgdesc='Async HTTP(S) scanner that greps response bodies and headers for strings or regex across hosts, ports, CIDR/ranges and TLS-cert vhosts.'
 url='https://nullsecurity.net/tools/scanner.html'
 license=('custom:unknown')
 arch=('any')
 depends=('python' 'python-requests')
-source=("https://github.com/nullsecuritynet/tools/raw/master/scanner/$pkgname/release/$pkgname-$pkgver.tar.gz")
-sha512sums=('3ce2e29bb93e30eca002bc0b38678cf0a750f78b50639ebe97a17849e8bf8d55e21407ec66faea3ab73194af81baacaf53874df83d8680c39729fc894c7165a9')
+optdepends=('python-aiodns' 'python-httpx-socks' 'python-uvloop')
+source=("https://github.com/nullsecuritynet/tools/raw/main/scanner/$pkgname/release/$pkgname-$pkgver.tar.gz")
+sha512sums=('153566cc30b7daf007e9bfaa9fb69215ffc0a3799930106a759e780cefc5ec4d44c0efbd31252397285293bb787cfb4e52f765d22f7848d44d96015896b0388a')
 
 package() {
   cd "$pkgname-$pkgver"

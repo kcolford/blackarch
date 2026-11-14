@@ -1,0 +1,31 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-influxdb
+_pkgname=influxdb-python
+pkgver=5.3.2
+pkgrel=2
+pkgdesc='Python client for InfluxDB.'
+arch=('any')
+url='https://github.com/influxdata/influxdb-python/'
+license=('MIT')
+depends=('python' 'python-requests' 'python-dateutil' 'python-six' 'python-pytz'
+         'python-msgpack')
+makedepends=('python-setuptools')
+optdepends=('influxdb')
+options=(!emptydirs)
+source=("https://github.com/influxdata/influxdb-python/archive/v$pkgver.tar.gz")
+sha512sums=('2cca3b67cb53e154f1415314499e635585556e50240fcd4522b225d0a3ddd9ed3139adc085087fdbaf80d132c570ac2aa3901f178524ec2796ec973be525f8e4')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py build
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+}
+

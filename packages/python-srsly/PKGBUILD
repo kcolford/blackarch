@@ -3,27 +3,28 @@
 
 pkgname=python-srsly
 _pkgname=srsly
-pkgver=2.4.2
-pkgrel=2
+pkgver=3.0.0
+pkgrel=1
+epoch=1
 pkgdesc='Modern high-performance serialization utilities for Python.'
 arch=('x86_64' 'aarch64')
 url='https://pypi.org/project/srsly/'
 license=('MIT')
 depends=('python' 'cython' 'python-catalogue' 'python-pytest'
          'python-pytest-timeout' 'python-pytz' 'python-mock' 'python-numpy')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/ea/1e/e456a751b70714e97ca931825ae983f934adec3b06064546d854938f2c80/$_pkgname-$pkgver.tar.gz")
-sha512sums=('69f8c24393cc24b0f0b0e4aacccc7d92cbfc7674a8066364d855db21515c5a2303fc11feb0ceab6844e1978760ff861008f1935cfb758c4928d1aaaf1acbd057')
+makedepends=('python-build' 'python-installer')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('8fb67e460aba393b2510bf45278479914721010ccb3a3b400caa2578d776895e319d412387d148e2c32500be55de1c0fc550c9eb53d8fc95aaf09a2de4585bf8')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

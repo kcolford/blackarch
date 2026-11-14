@@ -3,26 +3,20 @@
 
 pkgname=python-aenum
 _pkgname=aenum
-pkgver=3.1.8
+pkgver=3.1.17
 pkgrel=1
 pkgdesc="Advanced Enumerations (compatible with Python's stdlib Enum), NamedTuples, and NamedConstants."
 arch=('any')
 url='https://pypi.org/project/aenum/#files'
-license=('BSD')
+license=('BSD-3-Clause')
 depends=('python')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/14/f6/0c98c65f0f4e0a275f7a4493dddc58b30831749d7f74a72e487994fd9b7f/$_pkgname-$pkgver.tar.gz")
-sha512sums=('4dbc4f9be75eec40d3cd06a6cb4f542dab5ed499f43ae5d56ed5ee708c0b2565c45e674cc5caa8be03e85447fa6b244b5d491b0d91f637fdc378558811c11fc5')
-
-build() {
-  cd "$_pkgname-$pkgver"
-
-  python setup.py build
-}
+makedepends=('python-build' 'python-installer')
+source=("https://files.pythonhosted.org/packages/e3/52/6ad8f63ec8da1bf40f96996d25d5b650fdd38f5975f8c813732c47388f18/$_pkgname-$pkgver-py3-none-any.whl")
+sha512sums=('785f89889a719a26c20e3a236c6b301c045aecae0ec43085cf7f2daa5ce8efcfd887203bd5c454b832605f3d1003888681f657230fb6cfd32bdb4fe52abb226e')
 
 package() {
-  cd "$_pkgname-$pkgver"
+  python -m installer --destdir="$pkgdir" *.whl
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  find $pkgdir -type f -iname '*.pyc' -exec rm -rf {} +
 }
 

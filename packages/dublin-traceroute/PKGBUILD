@@ -2,14 +2,15 @@
 # See COPYING for license details.
 
 pkgname=dublin-traceroute
-pkgver=332.16c002c
-pkgrel=2
+pkgver=0.4.2.r176.gd8a9e5b
+pkgrel=1
+epoch=1
 pkgdesc='NAT-aware multipath tracerouting tool.'
 arch=('any')
 groups=('blackarch' 'blackarch-networking')
 url='https://github.com/insomniacslk/dublin-traceroute'
 license=('BSD')
-depends=('jsoncpp' 'libtins' 'libpcap')
+depends=('jsoncpp' 'libtins' 'libpcap' 'gtest')
 makedepends=('cmake' 'git' 'libcap')
 source=("git+https://github.com/insomniacslk/$pkgname.git"
         'CMakeLists.txt.patch')
@@ -19,7 +20,12 @@ sha512sums=('SKIP'
 pkgver() {
   cd $pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/^v\([0-9]\)/\1/;s/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
 }
 
 prepare() {
@@ -44,5 +50,7 @@ package() {
   cd ..
 
   install -Dm 644 COPYING "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+
+  rm -rf "$pkgdir/usr/include/"{gmock,gtest} "$pkgdir/usr/lib/"{cmake,pkgconfig}
 }
 

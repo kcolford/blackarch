@@ -2,35 +2,40 @@
 # See COPYING for license details.
 
 pkgname=apkid
-pkgver=2.1.1
-pkgrel=2
+_pkgname=APKiD
+pkgver=3.0.0
+pkgrel=1
 epoch=2
+_pyver=3.14
 pkgdesc='Android Application Identifier for Packers, Protectors, Obfuscators and Oddities.'
 groups=('blackarch' 'blackarch-mobile')
 arch=('any')
 url='https://github.com/rednaga/APKiD'
-license=('GPL3')
-depends=('python' 'python-argparse' 'python-yara-rednaga')
-makedepends=('python-setuptools' 'python-yara-rednaga')
-source=("https://github.com/rednaga/APKiD/releases/download/v$pkgver/$pkgname-$pkgver.tar.gz")
-sha512sums=('02355685e7f169219ef7e5a1dda91eeff4641d81c0fe6cdfc1c3dc5cf155d1e70d42fd55428935a77e2c9ee73c5159d6f4fedca44edb7e9cb5a340f66ba6293c')
+license=('GPL-3.0-or-later' 'custom:unknown')
+depends=('python' 'python-yara-python-dex')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+source=("https://github.com/rednaga/$_pkgname/archive/refs/tags/v$pkgver.tar.gz")
+sha512sums=('be55db138d2c5ad37ff0469bf9adcf48d92566d0289c352d33ab4346f2c76d848bd524f88176935d9752c5bee58ea569be25b68c5f40954c5bc9c0be6c35238e')
 
 prepare() {
-  cd "$pkgname-$pkgver"
+  cd "$_pkgname-$pkgver"
 
   sed -i 's|yara-python==3.11.0|yara-python|' setup.py
+
+  ./prep-release.py
 }
 
 build() {
-  cd "$pkgname-$pkgver"
+  cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
-  cd "$pkgname-$pkgver"
+  cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 
   install -Dm 644 -t "$pkgdir/usr/share/doc/$pkgname/" README.*
   install -Dm 644 -t "$pkgdir/usr/share/licenses/$pkgname" LICENSE.GPL \

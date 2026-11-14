@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=shocker
-pkgver=63.0380a73
-pkgrel=1
+pkgver=65.65d4d76
+pkgrel=3
 groups=('blackarch' 'blackarch-exploitation' 'blackarch-scanner')
 pkgdesc='A tool to find and exploit servers vulnerable to Shellshock.'
 arch=('any')

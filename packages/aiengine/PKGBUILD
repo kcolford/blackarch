@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=aiengine
-pkgver=2.0.1
-pkgrel=3
+pkgver=2.4.0
+pkgrel=2
 epoch=1
 groups=('blackarch' 'blackarch-networking' 'blackarch-defensive')
 pkgdesc='A packet inspection engine with capabilities of learning without any human intervention.'
@@ -11,9 +11,8 @@ arch=('x86_64' 'aarch64')
 url='https://bitbucket.org/camp0/aiengine/downloads/'
 license=('GPL3')
 depends=('boost' 'boost-libs' 'python' 'libpcap')
-makedepends=('make')
 source=("https://bitbucket.org/camp0/aiengine/downloads/$pkgname-$pkgver.tar.gz")
-sha512sums=('3623e2cdffbeba9ef8a2f92e85f5c1312115f054e57df3b133e59d9502ada2db3f4897324dc25df20b3789a4d1113ae6e4d45ab6dd63e905de7084308f4c5ca8')
+sha512sums=('0045eea2666e58db2dd127c9f867fa8bcc374775219c12671bb6f76f7701bca1ea6deba3488971ca48620478b310a4c5064df2a5952f79caa6a3bb28b013fa6b')
 
 build() {
   cd "$pkgname-$pkgver"

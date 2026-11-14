@@ -3,16 +3,16 @@
 
 pkgname=python-libfwnt-python
 _pkgname=libfwnt
-pkgver=20210906
-pkgrel=2
+pkgver=20260602
+pkgrel=1
 pkgdesc='Library for Windows NT data types.'
 url='https://pypi.org/project/libfwnt-python/#files'
 arch=('x86_64' 'aarch64')
 license=('LGPL3')
 depends=('python')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/9a/81/7bd51178291ea1dd02c50cd0c35b275251c182b52108929d17786aadd4cd/$_pkgname-$pkgver.tar.gz")
-sha512sums=('38f251d5ab66302420f9f154593e9a7ac02574e7286d01543abfbc996630c884778ffffb1eb2bc3e00c9cf60a0f0d5fa417ca38c8ea35a2225923e9db1e2ec6b')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('cf4ae9a4bf34c9b7d745958928571b16cc468f00f54434bb1b5d3f588849ced6257cc2e56d302a1e768ba84b334ba4b8fe8d21b3b533a748f4ad5ae6e845e12c')
 
 build() {
   cd "$_pkgname-$pkgver"

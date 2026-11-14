@@ -1,0 +1,40 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-docx2python
+_pkgname=${pkgname#python-}
+pkgver=3.7.2
+pkgrel=1
+pkgdesc='Extract docx headers, footers, text, footnotes, endnotes, properties, and images to a Python object.'
+arch=('any')
+url='https://pypi.org/project/docx2python/'
+license=('MIT')
+depends=('python' 'python-lxml')
+makedepends=('python-build' 'python-pip')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('fa7e25bd34a8b88c12aec64e1ade136a5e810fab4124f17e914e2a4ab45e83f478c5f49515388164dc0ba8f1cddb47c5bb57ce9b6b78c2949d2af4bcc7b1f614')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --outdir="$startdir/dist"
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  pip install \
+    --verbose \
+    --disable-pip-version-check \
+    --no-warn-script-location \
+    --ignore-installed \
+    --no-compile \
+    --no-deps \
+    --root="$pkgdir" \
+    --prefix=/usr \
+    --no-index \
+    --find-links="file://$startdir/dist" \
+    $_pkgname
+}
+

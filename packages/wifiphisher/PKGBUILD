@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=wifiphisher
-pkgver=794.f2adffa
-_pyver=3.10
+pkgver=800.4ae3365
+_pyver=3.14
 pkgrel=1
 epoch=1
 groups=('blackarch' 'blackarch-wireless' 'blackarch-social')

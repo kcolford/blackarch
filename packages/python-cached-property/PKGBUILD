@@ -1,0 +1,30 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-cached-property
+_pkgname=${pkgname#python-}
+pkgver=2.0.1
+pkgrel=1
+pkgdesc='A decorator for caching properties in classes.'
+arch=('any')
+license=('BSD-3-Clause')
+url='https://github.com/pydanny/cached-property'
+depends=('python')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://github.com/pydanny/cached-property/archive/$pkgver.tar.gz")
+sha512sums=('9dbb5bf5ea33a0da1eb60e138884ee69e2412922bdfbc61b267ca2cb740a937ea390945975dca79a061c1ad6c87e9ca44dda7b32fecf9c65bb3928fed3f0131b')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
+

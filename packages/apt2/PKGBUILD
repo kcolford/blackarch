@@ -2,23 +2,30 @@
 # See COPYING for license details.
 
 pkgname=apt2
-pkgver=175.6732505
-pkgrel=4
+pkgver=v1.0.20180315.r12.g8075cdc
+pkgrel=1
+epoch=1
 pkgdesc='Automated penetration toolkit.'
 groups=('blackarch' 'blackarch-automation')
 arch=('any')
 url='https://github.com/MooseDojo/apt2'
 license=('custom:unknown')
 depends=('python2' 'python2-argparse' 'python2-yattag' 'python2-scapy'
-         'python2-unqlite' 'python2-msgpack')
+         'python2-unqlite' 'python2-msgpack' 'python2-setuptools')
 makedepends=('git')
-source=("git+https://github.com/MooseDojo/$pkgname.git")
+#source=("git+https://github.com/MooseDojo/$pkgname.git")
+source=("git+https://github.com/tatanus/$pkgname.git")
 sha512sums=('SKIP')
 
 pkgver() {
   cd $pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
 }
 
 package() {

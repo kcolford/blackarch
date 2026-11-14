@@ -4,15 +4,15 @@
 pkgbase=python-scp
 pkgname=('python2-scp' 'python-scp')
 _pkgname=scp
-pkgver=0.14.4
+pkgver=0.16.2
 pkgrel=1
 pkgdesc='SCP module for paramiko.'
 arch=('any')
 url='https://pypi.org/project/scp/#files'
 license=('GPL')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/01/96/82028abe87441ae172ce9df2eeb46274130475bfeeb4dedeaddaf75b16a9/$_pkgname-$pkgver.tar.gz")
-sha512sums=('af85c67ab8230a44d5a0ec213ed5ad1d4b58f9a0aff774991804a454bcf1728c33b58168ac0fbd7d0537927234db3ba277c8a2ae3b8037ffde3ffb8324fa9abb')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('9168808a794ccd44514a5aedd07559c22631788a7f6937ced54816941cc96de196d507cf17bf3df2da8c87a3ea55283a7cedaf5c2c667f6092bdbde5958cd5dc')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

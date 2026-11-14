@@ -2,28 +2,32 @@
 # See COPYING for license details.
 
 pkgname=python-google-cloud-storage
-_pkgname=google-cloud-storage
-pkgver=2.2.1
+_pkgname=google_cloud_storage
+pkgver=3.17.1
 pkgrel=1
 pkgdesc='Google Cloud Storage API client library.'
 arch=('any')
 url='https://pypi.org/project/google-cloud-storage/#files'
-license=('Apache')
+license=('Apache-2.0')
 depends=('python' 'python-google-cloud-core' 'python-google-resumable-media'
-         'python-google-auth' 'python-protobuf' 'python-google-api-core')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/28/f5/d42d6c78dd8fc4d693557509a6a25a1f6338e9b215537798604cd448e6fa/$_pkgname-$pkgver.tar.gz")
-sha512sums=('e9d1813e4ca701773a7fff685cd58880f503e2582d77538ac72e6f7f54ae142c49697148d7f2dc9dfe1315504fbc8439313709efd94d8b737a5eb178933881fd')
+         'python-google-auth' 'python-protobuf' 'python-google-api-core'
+         'python-google-resumable-media' 'python-google-crc32c'
+         'python-requests')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('a2a7fd9573c3281ebb6d857bbc22e740f917ad2565ad08e70fd9be0642b71aa07638204ba9343c9c0058bf86c73b13697e2b3b565c5a1830a01a2e9759d7d3da')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

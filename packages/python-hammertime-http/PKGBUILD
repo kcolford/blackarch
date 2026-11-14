@@ -3,28 +3,36 @@
 
 pkgname=python-hammertime-http
 _pkgname=HammerTime-http
-pkgver=0.8
-pkgrel=2
+pkgver=0.11.1
+pkgrel=3
 pkgdesc='An HTTP client library aiming to perform a large number of requests on a server as fast as it can take them, but without distrupting operations significantly.'
 url='https://pypi.org/project/HammerTime-http/#files'
 arch=('any')
-license=('GPL2')
+license=('GPL-2.0-only')
 depends=('python' 'python-aiohttp' 'python-easyinject' 'python-aiodns'
-         'python-simhash')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/2e/37/84263fafd325f3c11f3c254b58a8874502cd21172bec0c37ba13feb71f33/HammerTime-http-$pkgver.tar.gz")
-sha512sums=('91206ee7f6a5af48b1f814e436fb02fffe6c7a3aabc5fab15beb464e3a845b99fb95d5cd273ad6244b29116cd976842849e7245a2502d26a2f94955f1bb40ecd')
+         'python-simhash' 'python-marshmallow-har'
+         'python-marshmallow-autoschema')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('c8c48d588fa4f53e56c8f090e1f866da4a69f25caf5004a25bd0107dd4183a0c686a3c20b4c383205ebcef5e8bc629a7f69aa58fde76155c314ae84c78cb57a8')
+
+prepare() {
+  cd "$_pkgname-$pkgver"
+
+  sed -i 's|"pytest-runner"||g' setup.py
+}
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 \
-    --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

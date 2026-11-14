@@ -3,7 +3,7 @@
 
 pkgname=python-wayback
 _pkgname=wayback
-pkgver=0.3.2
+pkgver=0.5.1
 pkgrel=1
 pkgdesc='Python API to Internet Archive Wayback Machine'
 url='https://pypi.org/project/wayback/#files'
@@ -11,8 +11,16 @@ arch=('any')
 license=('BSD')
 depends=('python' 'python-requests' 'python-urllib3')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/5c/59/062377ba658f8f1b83ae21c89e8f4c00c0a88b34ebb692e164f7104ec7a8/$_pkgname-$pkgver.tar.gz")
-sha512sums=('3f31788a88175eb9ce6d47aec1cbf767b05773ecf460a69fb00f381a5d13fecdedaad603b6d6d3e3b49be2f0d05b7617c764186b2e6b13150e92d9045b954881')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz"
+        'setup.py.patch')
+sha512sums=('d7e20adda6c7eacf9776c054cd57335cc3382757e6c4f48c67d5961da1e232adfb119a8badb028c46bf51d0aaf674fc16af29bde147108c61d7b0cc70e31da81')
+            '21a1e08164be6538a3876cf0213e7cfa894628365541e8e041e5bc45aa7d7667b644890d91b56c8ad88c00363750b404d3ad1f42afae098227516f5d96d82179')
+
+prepare() {
+  cd "$_pkgname-$pkgver"
+
+  patch -p0 < ../setup.py.patch
+}
 
 build() {
   cd "$_pkgname-$pkgver"

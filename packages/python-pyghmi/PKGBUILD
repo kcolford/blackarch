@@ -3,7 +3,7 @@
 
 pkgname=python-pyghmi
 _pkgname=pyghmi
-pkgver=1.5.36
+pkgver=1.6.19
 pkgrel=1
 pkgdesc='Python General Hardware Management Initiative (IPMI and others).'
 arch=('any')
@@ -11,8 +11,8 @@ url='https://pypi.org/project/pyghmi/#files'
 license=('Apache')
 depends=('python' 'python-pbr')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/a9/91/2e504460099563ad4129273d484fc80bce24df4171363cd87f799b0b2d10/$_pkgname-$pkgver.tar.gz")
-sha512sums=('b5536cf1c48929cb8acc7c9f77c09d0d51456cdfb2f74346387a483661332cdc02a614eac633a3e9aeabfac48b1a25a627668660be167fbf07b96c090ac6e197')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('92c98636e84f0fecdd17c1f4a7aa09d55f937eddf45ab41cd28fe5fe336991b7e19ede3b199b3b71ba66f125ecd33f3fc46b04ea44cbb99ca7afed6cdd129a55')
 
 build() {
   cd "$_pkgname-$pkgver"

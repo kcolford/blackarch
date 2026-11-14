@@ -4,15 +4,15 @@
 pkgbase=python-getmac
 pkgname=('python2-getmac' 'python-getmac')
 _pkgname=getmac
-pkgver=0.8.3
+pkgver=0.9.6
 pkgrel=1
 pkgdesc='Get MAC addresses of remote hosts and local interfaces.'
 arch=('any')
 url='https://pypi.org/project/getmac/#files'
 license=('MIT')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/66/9b/a23f8ea858716fe9969190f6dbfb2b7680039079b8eec0c7a7fb3be48a42/$_pkgname-$pkgver.tar.gz")
-sha512sums=('c30ad48092f51aff6dfd73ed914ada26098d2a7a4b44270183f0d3e9bece486feb54b09f8ca7085e0a965ef197c17facd2111748882656b3e621d28ac8c0b860')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('3980b0591e91ffde88eec54415094d573b96def8ad86f1554eb1ff679c7a58b7e06da9f910dd0859fa7017b6ac988e457e66a7c4b417b60258f0b10077ac5c53')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

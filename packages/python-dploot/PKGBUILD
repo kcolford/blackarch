@@ -1,0 +1,31 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-dploot
+_pkgname=${pkgname#python-}
+pkgver=3.2.2
+pkgrel=1
+pkgdesc='DPAPI looting remotely.'
+arch=('any')
+url='https://github.com/zblurx/dploot'
+license=('MIT')
+depends=('python' 'impacket-ba' 'python-cryptography' 'python-pyasn1'
+         'python-lxml')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel' 'python-poetry')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('ad814ebecc5a9fad6e95306ebac6423634897cf6002a992056314ec52c866dcf1099773c6a1e4700b044bff8cda1f6df5fa2e53f98db577c39cfc75fa6be8e5b')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
+

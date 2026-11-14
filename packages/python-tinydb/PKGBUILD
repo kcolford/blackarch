@@ -1,48 +1,42 @@
 # This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
 # See COPYING for license details.
 
-pkgbase=python-tinydb
-pkgname=('python2-tinydb' 'python-tinydb')
+pkgname=python-tinydb
 _pkgname=tinydb
-pkgver=4.7.0
+pkgver=4.9.0
+_pyver=3.14
 pkgrel=1
 pkgdesc='Lightweight document oriented database optimized for your happiness.'
 arch=('any')
 url='https://pypi.org/project/tinydb/#files'
 license=('MIT')
-makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/77/b3/2ab727ab4062800731c2e4d773358c6c25f8d630affa3e3ccdb21dc40d68/$_pkgname-$pkgver.tar.gz")
-sha512sums=('6a7d1ac395498f9bae7e6338cd87014847b59f9157ad77eea18fe2a5eb9dd519e593124b0cee27ff1b7035d12ce2804c2e9362a22d0a18f725f703bc222f85bc')
-
-prepare() {
-  cp -a "$_pkgname-$pkgver"{,-2}
-}
+depends=('python' 'python-pytest-cov' 'python-yaml')
+makedepends=('python-build' 'python-pip')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('da5c245b231cf851ce04415466fc73925e51d2a8cd3c08c1969e5f40ebc74ed050cf50a571ebe5d837659cd509c24488b3d64e04aa94dccdf3fc9f61eb406891')
 
 build() {
-  cd "$_pkgname-$pkgver-2"
-
-  python2 setup.py build
-
-  cd "$srcdir/$_pkgname-$pkgver"
-
-  python setup.py build
-}
-
-package_python2-tinydb() {
-  depends=('python2' 'python2-pytest-cov' 'python2-yaml')
-
-  cd "$_pkgname-$pkgver-2"
-
-  python2 setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 \
-    --skip-build
-}
-
-package_python-tinydb() {
-  depends=('python' 'python-pytest-cov' 'python-yaml')
-
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 \
-    --skip-build
+  python -m build --wheel --outdir="$startdir/dist"
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+	  pip install \
+    --verbose \
+    --disable-pip-version-check \
+    --no-warn-script-location \
+    --ignore-installed \
+    --no-compile \
+    --no-deps \
+    --root="$pkgdir" \
+    --prefix=/usr \
+    --no-index \
+    --find-links="file://$startdir/dist" \
+    $_pkgname
+
+  rm -rf "$pkgdir/usr/lib/python$_pyver/site-packages/tests"
 }
 

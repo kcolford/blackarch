@@ -4,15 +4,15 @@
 pkgbase=python-ip2location
 pkgname=('python2-ip2location' 'python-ip2location')
 _pkgname=IP2Location
-pkgver=8.7.2
-pkgrel=1
+pkgver=8.11.0
+pkgrel=2
 pkgdesc='Python API for IP2Location database.'
 arch=('any')
 url='https://pypi.org/project/IP2Location/#files'
 license=('MIT')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/7a/2b/dfce3b5f1b15731d9c403418b5120a72747f0d5b8608ec647649427f1dcb/IP2Location-$pkgver.tar.gz")
-sha512sums=('2ccfdeb30320e175c424db6bbea045c0021ca0581eb8589fb904a0e6f26f8dc86aa975761b8c49da99def59f94b7ab96b7e974176ba74712542e6c8a4126140c')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/IP2Location-$pkgver.tar.gz")
+sha512sums=('c00bfb6bc8cb0e621a5cfc4a1cd4a03ae118649f2fad63bb18984bb258accf0a22c03c4a8c1cb23ceaf11e5d1bf24a94c87579b30ced7694549fcbbb2d9e051a')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

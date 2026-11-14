@@ -3,7 +3,7 @@
 
 pkgname=python-chepy
 _pkgname=chepy
-pkgver=3.5.0
+pkgver=7.6.0
 pkgrel=1
 pkgdesc='Chepy is python lib/cli equivalent of the awesome CyberChef tool.'
 arch=('any')
@@ -20,8 +20,8 @@ depends=('python' 'python-colorama' 'python-crccheck' 'python-decorator'
          'python-lazy-import')
 makedepends=('python-setuptools')
 options=(!emptydirs)
-source=("https://files.pythonhosted.org/packages/ff/56/74354fdd343d8fe63f1f8fca212e38f3c88caf490b4789f6c32c67d7f26b/$_pkgname-$pkgver.tar.gz")
-sha512sums=('449d49e16bc97527eef3be26535d58aebb57d8770b98c82258e11ca3d706ad9b1f869ee213fe280366f84af2a405acb244ee805025e0572f0fa72bed68623ff4')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('51ee46c5b893526eda3cf9400a195311ec75c3a9ee6133abf683f587730740de25cf7362ad16f6bd414860e3eb90f7347c607dd341cfdb15aec7e7d2dc3d1b13')
 
 prepare() {
   cd $_pkgname-$pkgver

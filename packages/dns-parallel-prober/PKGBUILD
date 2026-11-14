@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=dns-parallel-prober
-pkgver=58.d8547e2
-pkgrel=1
+pkgver=68.422db61
+pkgrel=3
 pkgdesc='PoC for an adaptive parallelised DNS prober.'
 groups=('blackarch' 'blackarch-recon')
 arch=('any')

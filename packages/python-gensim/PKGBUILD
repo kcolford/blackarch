@@ -4,7 +4,7 @@
 pkgbase=python-gensim
 pkgname=('python2-gensim' 'python-gensim')
 _pkgname=gensim
-pkgver=4.1.2
+pkgver=4.4.0
 pkgrel=2
 pkgdesc='Python framework for fast Vector Space Modelling.'
 arch=('any')
@@ -12,8 +12,8 @@ url='https://pypi.org/project/gensim/#files'
 license=('LGPL')
 makedepends=('python2-setuptools' 'python-setuptools')
 options=(!emptydirs)
-source=("https://files.pythonhosted.org/packages/4b/6d/22a9a2b934344fbf25ab2613543eeeb724ffd3ba7376e8fed88aabe885c8/$_pkgname-$pkgver.tar.gz")
-sha512sums=('3e65f696a8669c766b92c5c81a9f517068d5eb9c3bd6d36484f0a91a8651f2e0872a4d8bdce87908f651c3f9d17312a1196630c9846973203a5e4f2e72519662')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('5aa307373a331841e081ca0613bf0f62e2452394285415bc65773dce60ebdd33eb712fa953fc095a35d65ab5fc8a7967a17ace2059e1772c558e6cd2022ad1ec')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

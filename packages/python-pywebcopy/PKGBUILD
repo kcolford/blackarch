@@ -3,18 +3,18 @@
 
 pkgname=python-pywebcopy
 _pkgname=pywebcopy
-pkgver=7.0.1
-_pyver=3.10
-pkgrel=1
+pkgver=7.1
+_pyver=3.14
+pkgrel=2
 pkgdesc='Python package for cloning complete webpages and websites to local storage.'
 arch=('any')
 url='https://pypi.org/project/pywebcopy/#files'
 license=('Apache')
-depends=('python' 'python-requests' 'python-lxml' 'python-pyquery'
-         'python-parse' 'python-w3lib' 'python-beautifulsoup4' 'python-fire')
-makedepends=('python-setuptools' 'python-pip' 'python-wheel')
-source=("https://files.pythonhosted.org/packages/37/e4/8970d4b9baee1085bc63bef618e8d866eefaf2548798a15c9549d245d6ab/$_pkgname-$pkgver.tar.gz")
-sha512sums=('4734adcd6c57a3235d361403b8260f5f633f342d6b67f1c8de42307a182dda668c900aafd354b72243e06431cde53751e1b91dea65704b5638bb63fe51e212e6')
+depends=('python' 'python-cachecontrol' 'python-lxml-html-clean'
+         'python-requests' 'python-six')
+makedepends=('python-setuptools')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('c65c9d725f640e7f0586604149d4b7ae2fd7e359442e2ace448b0bf03daba3cecf089f9e802ba13b60062389415930cc7f831b9885fe9ee9352209a2b06fa6d4')
 
 prepare() {
   cd "$_pkgname-$pkgver"

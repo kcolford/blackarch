@@ -2,7 +2,7 @@
 # See COPYING for license details.
 
 pkgname=sfuzz
-pkgver=198.3bf135b
+pkgver=201.9c01dab
 pkgrel=1
 groups=('blackarch' 'blackarch-fuzzer')
 pkgdesc='A simple fuzzer.'
@@ -34,6 +34,6 @@ package() {
   install -dm 755 "$pkgdir/usr/share"
 
   make BIN_DIR="$pkgdir/usr/bin/" SHARE_DIR="$pkgdir/usr/share/" \
-    MAN_DIR="$pkgdir/usr/man/man1/" install
+    MAN_DIR="$pkgdir/usr/share/man/man1/" install
 }
 

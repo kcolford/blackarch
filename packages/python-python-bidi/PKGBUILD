@@ -2,27 +2,29 @@
 # See COPYING for license details.
 
 pkgname=python-python-bidi
-_pkgname=python-bidi
-pkgver=0.4.2
-pkgrel=2
-pkgdesc='Pure python implementation of the BiDi layout algorithm.'
+_pkgname=python_bidi
+pkgver=0.6.12
+pkgrel=1
+pkgdesc='Python Bidi layout wrapping the Rust crate unicode-bidi.'
 url='https://bidict.readthedocs.org/'
-arch=('any')
-license=('LGPL')
+arch=('x86_64' 'aarch64')
+license=('LGPL-3.0-or-later')
 depends=('python')
-makedepends=('python-setuptools' 'python-pip' 'python-wheel')
-source=("https://files.pythonhosted.org/packages/7b/25/3372ce50082776134b0467a4616722ff7494f3bcd9cf11e1180d0eddb248/$_pkgname-$pkgver.tar.gz")
-sha512sums=('aa837dc0d0c7c8be690ad0be677816e2204175014df491031f42c6b7d805424ed4405f0d5294596bd67ab23d5e3d701b2e5f979a2073ab43fa7a439eb0ff5552')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel' 'python-maturin')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('77506df6fc4789d8171d40d92156098315a3a29f34f943b3b5d3e7946300aa94d049d1fbb1e3805f4488e00efafc766222e85b0b64907872a1264725d0131913')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

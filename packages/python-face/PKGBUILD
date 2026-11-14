@@ -1,0 +1,35 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-face
+_pkgname=face
+pkgver=26.0.0
+pkgrel=1
+pkgdesc='A command-line application framework (and CLI parser).'
+arch=('any')
+url='https://github.com/mahmoud/face'
+license=('BSD-3-Clause')
+depends=('python' 'python-boltons' 'python-cachetools' 'python-chardet'
+         'python-click' 'python-colorama' 'python-coverage' 'python-distlib'
+         'python-exceptiongroup' 'python-filelock' 'python-importlib-metadata'
+         'python-iniconfig' 'python-packaging' 'python-platformdirs'
+         'python-pluggy' 'python-pyproject-api' 'python-pyproject-hooks'
+         'python-tomli' 'python-tox' 'python-typing_extensions' 'python-zipp')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('0102cfe9526a7d629bd3412177488f21755c31843543474610b1b6d8a658a0a0e239bfc43da4a730110adfb5bcaa55d2c901fd17847fb372972418be97261579')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
+

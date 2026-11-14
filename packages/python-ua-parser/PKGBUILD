@@ -4,15 +4,15 @@
 pkgbase=python-ua-parser
 pkgname=('python2-ua-parser' 'python-ua-parser')
 _pkgname=ua-parser
-pkgver=0.10.0
-pkgrel=3
+pkgver=1.0.2
+pkgrel=1
 pkgdesc="Python port of Browserscope's user agent parser."
 url='https://pypi.org/project/ua-parser/#files'
 license=('APACHE')
 arch=('any')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/92/68/b5c60fc7386d95de9d66a42b9a9d4898d74de895368964b198003042e297/$_pkgname-$pkgver.tar.gz")
-sha512sums=('5fe1b1c5f0c990b351d31542b1975e34750de265257f10f69b9158392c3934605bc39948bd56fa97757dae314524bc4ceb2d71dfada55ff7625bec6685f71552')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('e812c0e59bd2df2642e42e19f39ee4d49b3f26b92bedf93682231d67051fea58cf518cbf2bb2800a4dea7b89b4177025a317e22469be0d67a5b8e3c55d4e9620')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

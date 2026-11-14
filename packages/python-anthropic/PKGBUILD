@@ -1,0 +1,40 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-anthropic
+_pkgname=${pkgname#python-}
+pkgver=2.3.0
+pkgrel=1
+pkgdesc='The official Python library for the anthropic API.'
+arch=('any')
+url='https://pypi.org/project/anthropic/#files'
+license=('MIT')
+depends=('python' 'python-anyio' 'python-distro' 'python-httpx' 'python-jiter'
+         'python-pydantic' 'python-pydantic-core' 'python-sniffio'
+         'python-tokenizers' 'python-typing_extensions'
+         'python-docstring-parser' 'python-inline-snapshot')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel' 'python-hatchling' 'python-hatch-fancy-pypi-readme')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('c758ac7ac30964af8b5562a3b561d99bf73a163b3f788c6c24dd58dd741e65bf1cc52f175cd80861bfd6f64f62eb5be8177f0866ff6c601b28cf5e839cc8c51d')
+
+prepare() {
+  cd "$_pkgname-$pkgver"
+
+  sed -i 's|hatchling==|hatchling>=|' pyproject.toml
+  sed -i '/^filterwarnings = \[/,/^]/d' pyproject.toml
+}
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
+

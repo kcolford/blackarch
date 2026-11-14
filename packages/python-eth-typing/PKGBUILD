@@ -2,27 +2,29 @@
 # See COPYING for license details.
 
 pkgname=python-eth-typing
-_pkgname=eth-typing
-pkgver=3.0.0
-pkgrel=2
+_pkgname=eth_typing
+pkgver=6.0.0
+pkgrel=1
 pkgdesc='Common type annotations for ethereum python packages.'
 url='https://pypi.org/project/eth-typing/#files'
 arch=('any')
 license=('MIT')
 depends=('python')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/7b/3f/b4de67863e1af8550a80d0f1505ff18eb85914f3e880137c28e607713167/$_pkgname-$pkgver.tar.gz")
-sha512sums=('90cf54ac87f0a7829871cff1e617c3857fe491b91b74b1f83dbe66fc0cdb58747afe2ca8ea88a04c242334243d75e157607895f32c55da90c9a11ec99215978f')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('bbcd0016f8e73f33fab102a671848882f4bd8f03e37403cf33e972bcaa19105b86b999e91db74013c7a3d44dd33656b761ef6623766999b13365657224d40747')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

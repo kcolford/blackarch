@@ -4,16 +4,16 @@
 pkgbase=python-smart-open
 pkgname=('python2-smart-open' 'python-smart-open')
 _pkgname=smart_open
-pkgver=5.2.1
-pkgrel=2
+pkgver=9.0.1
+pkgrel=1
 pkgdesc='Utils for streaming large files (S3, HDFS, gzip, bz2...).'
 arch=('any')
 url='https://pypi.org/project/smart-open/#files'
 license=('MIT')
 makedepends=('python2-setuptools' 'python-setuptools')
 options=(!emptydirs)
-source=("https://files.pythonhosted.org/packages/53/9e/7a25cefbe4b51ea9bf883999c359dd761d32dcd2f764b70805278bb20bde/smart_open-$pkgver.tar.gz")
-sha512sums=('103103318656a559b4dd1ad5b48b5d3f7399843e3ff9bb2442470fced9349eb1ba5fed2d886c76647b0928df50e9c8e2981bf5fe64b058cea8a3fa6e4682cb9e')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/smart_open-$pkgver.tar.gz")
+sha512sums=('339c2d523167a30c3e26c5e5ac08f86d539004585cc3a3d365cb2e58970b0b828b22eb0d079352e2642c23afbace53417a7ca80694df51fb0a34761050651d6f')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

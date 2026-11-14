@@ -3,16 +3,16 @@
 
 pkgname=python-azure-mgmt-network
 _pkgname=azure-mgmt-network
-pkgver=19.3.0
-pkgrel=2
+pkgver=33.1.0
+pkgrel=1
 pkgdesc='Microsoft Azure Network Management Client Library for Python.'
 arch=('any')
 url='https://pypi.org/project/azure-mgmt-network/#files'
 license=('MIT')
 depends=('python')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/d1/4c/3eee1389c97c6da528665ee50f85b9e4def0fffacaf5fe6e29e42a7104be/$_pkgname-$pkgver.zip")
-sha512sums=('b31003f3c830f5fc09b45a18eb4e5da84b7eefb8671310bdffb9d49aff7318fc8d179419807d75ca6069f419cb1d786c09bf3c92f0c7609b3dd6a028036aea59')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.zip")
+sha512sums=('52172d16ad5e9c204d2f68c3c9f2ec1621aff902334647435a80f9dff1eeb8f9b02e41e65fcf826dd9eccdd815432318ab3e4c7e2e93badf6359c5c49e09f33c')
 
 build() {
   cd "$_pkgname-$pkgver"

@@ -2,7 +2,7 @@
 # See COPYING for license details.
 
 pkgname=cyberscan
-pkgver=75.ca85794
+pkgver=87.24c69b9
 pkgrel=1
 pkgdesc='A Network Pentesting Tool.'
 groups=('blackarch' 'blackarch-networking' 'blackarch-scanner')

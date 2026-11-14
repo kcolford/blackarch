@@ -2,16 +2,16 @@
 # See COPYING for license details.
 
 pkgname=oledump
-pkgver=0.0.63
-pkgrel=1
+pkgver=0.0.81
+pkgrel=2
 groups=('blackarch' 'blackarch-binary' 'blackarch-malware')
 pkgdesc='Analyze OLE files (Compound File Binary Format). These files contain streams of data. This tool allows you to analyze these streams.'
 arch=('any')
 url='http://blog.didierstevens.com/programs/oledump-py/'
 license=('custom:unknown')
-depends=('python' 'python-lxml' 'python-yara' 'python-olefile')
+depends=('python' 'python-lxml' 'python-yara-python-dex' 'python-olefile')
 source=("https://didierstevens.com/files/software/${pkgname}_V${pkgver//./_}.zip")
-sha512sums=('28e9892b55d10def3bb75edca501a232340e4b3afa4642d57d3a0f0019ffce2dc7f3d03981f9aac889585e5a6c7b5e8611b91b90d85c2fc4ad3644c0752236cd')
+sha512sums=('cacf9b45c7a8a0c2a1e17456d534d41ea885bad9aded09953f8e7aa7b15a670b5b45bba84d8e14120f2e92ac2055e45474d13bafb79a1caf1d108360f3a1e4c2')
 
 prepare() {
   find . -type f -name '*.py' -exec sed -i 's|env python|env python|' {} +

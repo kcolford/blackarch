@@ -3,7 +3,7 @@
 
 pkgname=python-google-cloud-container
 _pkgname=google-cloud-container
-pkgver=2.10.7
+pkgver=2.67.0
 pkgrel=1
 pkgdesc='Google Container Engine API client library.'
 arch=('any')
@@ -11,8 +11,8 @@ url='https://pypi.org/project/google-cloud-container/#files'
 license=('Apache')
 depends=('python' 'python-google-api-core')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/d8/89/27ff0e00d253da5540ce639a0ff48d163696c41b987817956d96f722f766/$_pkgname-$pkgver.tar.gz")
-sha512sums=('a3f78df686b6d301e54985f5b34bcb3a51c0bbfb901da34a576d686e92051e4ff1c357c50801f9d065e854140f42e236a002dc585625c63fedcc5adf0c7d0bd6')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('6d6e7ac57187b8abfd51bb2cb99d04944af6b267c43abef2b10aa19bb759ff33427b8eef77c16c1ec3813e4686330fba92cdfe41df506381776e3138fe92f0f7')
 
 build() {
   cd "$_pkgname-$pkgver"

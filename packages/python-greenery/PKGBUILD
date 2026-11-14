@@ -4,15 +4,15 @@
 pkgbase=python-greenery
 pkgname=('python2-greenery' 'python-greenery')
 _pkgname=greenery
-pkgver=3.3.5
+pkgver=4.2.3
 pkgrel=1
 pkgdesc='Greenery allows manipulation of regular expressions as finite state machines.'
 arch=('any')
 url='https://pypi.org/project/greenery/#files'
 license=('APACHE')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/ad/5f/b2afd8c34849f2643c5ddcb8ef8d1461f34d9c6cefc640dba0de6a0ed7a1/$_pkgname-$pkgver.tar.gz")
-sha512sums=('523fb90dc2edeff489f185cf3d782a819a125936e40e5e189858a19e247ab88f8f50e21309e2917f4b877c1a0134bd4401b7d3f7bff2e912f5fc565a949a3f1e')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('9cd58beb7ca8ee76857f0827a722cb5476f1c8c3292c6b7c04f5fdc656ee1b3bad03e7e671c98bd1a41da59f7ce836c1837ea76d2276146cfec7500c6544a099')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

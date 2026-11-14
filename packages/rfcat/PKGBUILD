@@ -2,24 +2,70 @@
 # See COPYING for license details.
 
 pkgname=rfcat
-pkgver=170508
+pkgver=v3.0.0.r3.gcf7a4f9
 pkgrel=1
-pkgdesc='RF ChipCon-based Attack Toolset.'
-groups=('blackarch' 'blackarch-exploitation')
-url='http://code.google.com/p/rfcat'
+epoch=1
+_pyver=3.14
+pkgdesc='Swiss-army knife of ISM band radio.'
 arch=('any')
-license=('BSD')
-depends=('python2' 'python2-pyusb')
-source=("https://bitbucket.org/atlas0fd00m/rfcat/downloads/${pkgname}_${pkgver}.tgz")
-sha512sums=('79f960ee6b8c2d66cb17ca69216041bb9679b0d38579feb3ab59bbb6e41337b29c4ad30a6d03b2de4c58eeeff5f22fe26412a670da5278e81a47a2ec3d699f60')
+groups=('blackarch' 'blackarch-radio' 'blackarch-exploitation')
+url='https://code.google.com/archive/p/rfcat/'
+license=('BSD-3-Clause' 'GPL-2.0-or-later')
+depends=('python' 'python-future' 'python-pyusb' 'pyside6' 'libusb')
+makedepends=('git' 'python-setuptools')
+source=("git+https://github.com/atlas0fd00m/$pkgname.git")
+sha512sums=('SKIP')
+
+pkgver() {
+  cd $pkgname
+
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
+}
+
+prepare() {
+  cd "$pkgname"
+
+  # Exclude tests from package data
+  python - <<'PY'
+from pathlib import Path
+p = Path("setup.py")
+s = p.read_text()
+if "exclude_package_data" not in s:
+    s = s.replace(
+        "package_data     = pkgdata,",
+        'package_data     = pkgdata,\n        exclude_package_data={"": ["tests/*", "*/tests/*"]},'
+    )
+# Ensure include_package_data isn't True
+s = s.replace("include_package_data = True", "include_package_data = False")
+p.write_text(s)
+PY
+
+  # Replace PySide2 with PySide6
+  sed -i 's/from PySide2/from PySide6/g' rflib/ccspecan.py
+  sed -i 's/\.exec_(/.exec(/g' rflib/ccspecan.py
+  sed -i 's/\.exec_(/\.exec(/g' rflib/__init__.py
+}
+
+build() {
+  cd $pkgname
+
+  python setup.py build
+}
 
 package() {
-  cd "${pkgname}_$pkgver"
+  cd $pkgname
 
-  python2 setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
 
-  install -Dm 644 -t "$pkgdir/usr/share/doc/$pkgname" FAQ README TODO \
-    README.immesniff README.nonroot TODO
-  install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  for i in "$pkgdir/usr/bin/"*_*; do
+    mv $i "$(echo $i | tr -s '_' '-')"
+  done
+
+  rm -rf "$pkgdir/usr/lib/python$_pyver/site-packages/tests"
 }
 

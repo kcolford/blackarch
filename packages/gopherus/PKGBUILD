@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=gopherus
-pkgver=31.9ca94b8
-pkgrel=1
+pkgver=33.90a2fd5
+pkgrel=3
 pkgdesc='Tool generates gopher link for exploiting SSRF and gaining RCE in various servers.'
 groups=('blackarch' 'blackarch-webapp' 'blackarch-exploitation')
 arch=('any')

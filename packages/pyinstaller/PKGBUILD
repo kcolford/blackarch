@@ -2,40 +2,61 @@
 # See COPYING for license details.
 
 pkgname=pyinstaller
-_pkgname=PyInstaller
-pkgver=3.5
-pkgrel=2
+pkgver=6.22.3
+pkgrel=1
 epoch=2
 groups=('blackarch' 'blackarch-misc')
-pkgdesc='A program that converts (packages) Python programs into stand-alone executables, under Windows, Linux, Mac OS X, Solaris and AIX.'
-arch=('any')
-url='http://www.pyinstaller.org/downloads.html'
-license=('GPL')
-depends=('python2' 'python2-requests' 'python2-pyusb' 'python2-dis3'
-         'python2-pefile' 'python2-macholib' 'python2-setuptools')
-source=("https://files.pythonhosted.org/packages/e2/c9/0b44b2ea87ba36395483a672fddd07e6a9cb2b8d3c4a28d7ae76c7e7e1e5/$_pkgname-$pkgver.tar.gz")
-sha512sums=('bdb2a138af1f402dea8d89c7e317600896d3139742a12c6335aeff7c56e99977b8fa258c5a626dbf73d22f3e2b6064bf1d4494a021300fcadc051dde8712ed01')
+pkgdesc='Bundles a Python application and all its dependencies into a single package.'
+arch=('x86_64' 'aarch64')
+url='https://pyinstaller.org'
+license=('Apache-2.0' 'GPL-2.0-or-later' 'MIT')
+depends=(
+  'python' 'python-setuptools' 'python-altgraph' 'pyinstaller-hooks-contrib' # project python dependencies
+  'glibc' 'binutils' 'gcc' 'base-devel' # project system dependencies
+)
+makedepends=(
+  'python-build' 'python-installer' 'python-wheel' 'python-setuptools' 'python-hatchling' # python package
+  'waf' # bootloader
+)
+source=("https://files.pythonhosted.org/packages/source/${pkgname::1}/$pkgname/$pkgname-$pkgver.tar.gz"
+        'fortify-source-fix.patch')
+sha512sums=('11b0f0cbf610539f606f7a9be36d3df78778f51872efa73f027f83403b4bea95c7ef59ea2346d5acbf553cdf59624e36bc7a16a586064d4491dd9443ca20b7c4'
+            '765a2f0c984d966c27309194e73a50b325309c5e65253c92a7140d8b179f94394dd0e01aa1b46b3777a1a06da33ce92919070dd70fde87bf5d81eb750d73f5ed')
 options=('!strip' '!emptydirs')
 
 prepare() {
-  cd "$_pkgname-$pkgver"
+  cd "$pkgname-$pkgver"
 
-  grep -RIl '^#!.*python' . | xargs sed -i '/^#!/ s|.*|#! /usr/bin/env python2|'
+  # Remove pre-built binaries
+  rm -rf PyInstaller/bootloader/{Darwin,Linux,Windows}*
+
+  # Avoid redefining _FORTIFY_SOURCE if default makepkg CFLAGS are used
+  patch -Np1 -i "${srcdir}/fortify-source-fix.patch"
+}
+
+build() {
+  cd "$pkgname-$pkgver"
+
+  # Compile bootloader
+  #cd bootloader
+  #python ./waf all
+  #cd ..
+
+  # Build package
+  python -m build --wheel --no-isolation
 }
 
 package() {
-  cd "$_pkgname-$pkgver"
+  cd "$pkgname-$pkgver"
 
-  rm -rf bootloader old tests PKG-INFO setup.py
+  # Package
+  python -m installer --destdir="$pkgdir" dist/*.whl
 
-  install -dm 755 "$pkgdir/usr/bin"
-  install -dm 755 "$pkgdir/usr/share/doc/$pkgname"
-  install -dm 755 "$pkgdir/usr/share/$pkgname"
+  # Man pages
+  install -Dm 644 doc/{"$pkgname",pyi-makespec}.1 -t \
+    "$pkgdir/usr/share/man/man1/"
 
-  rm -rf doc
-
-  cp -a --no-preserve=ownership . "$pkgdir/usr/share/$pkgname"
-
-  ln -s "/usr/share/$pkgname/$pkgname.py" "$pkgdir/usr/bin/$pkgname"
+  # Custom license
+  install -Dm 644 COPYING.txt -t "$pkgdir/usr/share/licenses/$pkgname/"
 }
 

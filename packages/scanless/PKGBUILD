@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=scanless
-pkgver=86.6e083d7
-pkgrel=1
+pkgver=90.3da40e9
+pkgrel=6
 pkgdesc='Utility for using websites that can perform port scans on your behalf.'
 groups=('blackarch' 'blackarch-scanner')
 arch=('any')

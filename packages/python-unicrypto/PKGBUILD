@@ -1,0 +1,29 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-unicrypto
+_pkgname=${pkgname#python-}
+pkgver=0.0.12
+pkgrel=2
+pkgdesc='Unified interface for cryptographic libraries.'
+arch=('any')
+url='https://pypi.org/project/unicrypto/#files'
+license=('MIT')
+depends=('python' 'python-pycryptodomex')
+makedepends=('python-setuptools')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('9d34f6c27c2726e730f4477e88339683f2d381e425f84d0a8fa4d96a65309bbdede70bddfd8311f2df39e7d3c85484d4c6ba7e59110e025ffd70452f13b76823')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py build
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+}
+

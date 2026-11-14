@@ -1,52 +1,32 @@
 # This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
 # See COPYING for license details.
 
-pkgbase=python-xhtml2pdf
-pkgname=('python2-xhtml2pdf' 'python-xhtml2pdf')
-_pkgname=xhtml2pdf
-pkgver=0.2.7
+pkgname=python-xhtml2pdf
+_pkgname=${pkgname#python-}
+pkgver=0.2.28
 pkgrel=1
 pkgdesc='PDF generator using HTML and CSS.'
 arch=('any')
 url='https://pypi.org/project/xhtml2pdf/#files'
-license=('APACHE')
-makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/3c/89/f508a3dadf9ca32611d8dba6ffed8d1ed690c4192a551baea6213d85cf3c/$_pkgname-$pkgver.tar.gz")
-sha512sums=('75daecaf7f9a6a9e1c13322b412c83b4be98da7c22a15475db1c0fc64caf7d2280e32f7fb2438f21975ddac4dcfa336e463f9e116466d10f712bcfa647ad6102')
-
-prepare() {
-  cp -a "$_pkgname-$pkgver"{,-2}
-}
+license=('Apache-2.0')
+depends=('python' 'python-html5lib' 'python-pillow' 'python-six' 'python-pypdf2'
+         'python-reportlab' 'python-arabic-reshaper'  'python-python-bidi'
+         'python-reportlab' 'python-svglib')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('9b252f618210569785e2d77809b0135f0bc95b8969eecc92406c7326f141cba9c1c38220a71abbc37032f2be0e0fe579be3de3a25aebe6f22c75744828051f5f')
 
 build() {
-  cd "$_pkgname-$pkgver-2"
-
-  python2 setup.py build
-
-  cd "$srcdir/$_pkgname-$pkgver"
-
-  python setup.py build
-}
-
-package_python2-xhtml2pdf() {
-  depends=('python2' 'python2-html5lib' 'python2-pillow6' 'python2-six'
-           'python2-pypdf2' 'python2-reportlab')
-
-  cd "$_pkgname-$pkgver-2"
-
-  python2 setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
-
-  for i in "$pkgdir/usr/bin/"* ; do
-    mv $i "${i}2"
-  done
-}
-
-package_python-xhtml2pdf() {
-  depends=('python' 'python-html5lib' 'python-pillow' 'python-six'
-           'python-pypdf2' 'python-reportlab')
-
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

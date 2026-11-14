@@ -3,8 +3,8 @@
 
 pkgname=jira-scan
 _gemname=jira_scan
-pkgver=5.22a050b
-pkgrel=1
+pkgver=7.447d0ec
+pkgrel=4
 pkgdesc='A simple remote scanner for Atlassian Jira'
 groups=('blackarch' 'blackarch-webapp' 'blackarch-scanner')
 arch=('any')

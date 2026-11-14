@@ -3,17 +3,17 @@
 
 pkgname=python-splunk-sdk
 _pkgname=splunk-sdk
-pkgver=1.6.19
+pkgver=3.0.1
 pkgrel=1
 pkgdesc='The Splunk Software Development Kit for Python.'
 arch=('any')
 url='https://pypi.org/project/splunk-sdk/#files'
-depends=('python')
+depends=('python' 'python-deprecation')
 makedepends=('python-setuptools')
 license=('Apache')
 options=(!emptydirs)
-source=("https://files.pythonhosted.org/packages/a4/b6/80341af7856188329a1ca7e4b743ba65441e02fc3b115d1e7541e85d2adf/$_pkgname-$pkgver.tar.gz")
-sha512sums=('038b6adf3ae6e879ba48954dbd53791abbaefd7f90233f84728703de72c7f2dd25984fe6f10449b5e8c166726771405ff6f145eebceb6b867063f76baa15376f')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('e11bb44b387d25579eff276295bd99652c4cea43993bd1798024539ba8dc8beab997be4abe0027c0815386de6c019841c77cca853e8076067876286a4d00ecea')
 
 build() {
   cd "$_pkgname-$pkgver"

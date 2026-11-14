@@ -3,7 +3,7 @@
 
 pkgname=python-google-cloud-logging
 _pkgname=google-cloud-logging
-pkgver=3.0.0
+pkgver=3.17.0
 pkgrel=1
 pkgdesc='Stackdriver Logging API client library.'
 arch=('any')
@@ -11,8 +11,8 @@ url='https://pypi.org/project/google-cloud-logging/#files'
 license=('Apache')
 depends=('python' 'python-google-api-core' 'python-google-cloud-core')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/1d/c5/207d10631a10ce555874731973f3ec99b3884b2a3ee688af6ea43a8454d9/$_pkgname-$pkgver.tar.gz")
-sha512sums=('40a76722b381f33586f859b255da26c4016da50795df0198b1bc4350cba08e8278a19fe0d462e5c8c5769873e7fa439993f7a83ef35a5bd5d99c2f06b7e804ec')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('018a8e58c4c6e925268f6afcdc1bfaa1a678a93b2fa5d5be643c00166385bdc4fb8e5756e02b4da9babf6ff2786b77040f037d02ae9ffc36f4985c851abd303d')
 
 build() {
   cd "$_pkgname-$pkgver"

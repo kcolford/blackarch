@@ -3,16 +3,16 @@
 
 pkgname=batman-alfred
 _pkgname=alfred
-pkgver=2022.0
+pkgver=2026.3
 pkgrel=1
 pkgdesc='Almighty Lightweight Fact Remote Exchange Daemon.'
 groups=('blackarch' 'blackarch-wireless')
 arch=('x86_64' 'aarch64')
 url='http://www.open-mesh.org/'
-license=('GPL')
+license=('GPL-3.0-or-later')
 depends=('gpsd' 'libnl' 'dbus')
 source=("https://downloads.open-mesh.org/batman/releases/batman-adv-$pkgver/$_pkgname-$pkgver.tar.gz")
-sha512sums=('05e4ace37ffb9db9e939a30ab73967282b9b4220e660869b35e1dcb100e472d5cf983c438293f8fb7148f671620761d7c3cbc84d9d9d5f32a55333293d096f27')
+sha512sums=('53cac2b95ebf9cbd4454692ae7c3c4a2f0d5d744fd8a060a4d9f2b630a239fd7b59473380ff1816d501c29fd55ee57665ad3caf3f7f51832f05bc68fabdb43ea')
 
 build() {
   cd "$_pkgname-$pkgver"

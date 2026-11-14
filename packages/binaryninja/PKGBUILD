@@ -1,0 +1,40 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=binaryninja
+pkgver=6.0.10601
+pkgrel=1
+pkgdesc='A new kind of reversing platform (demo version).'
+groups=('blackarch' 'blackarch-reversing' 'blackarch-binary')
+arch=('x86_64')
+url='https://binary.ninja/free/'
+license=('custom:commercial' 'evaluation')
+depends=('libglvnd' 'libxkbcommon-x11')
+replaces=("$pkgname-demo")
+provides=("$pkgname")
+source=('https://cdn.binary.ninja/installers/binaryninja_free_linux.zip'
+        'LICENSE')
+sha512sums=('a33b1bdd91ffd19044bb4163938ee1eaf8e538c89b9d83bb9245b91ad50bf2f6b4237bf3fdfe07e4c3afacc5eff5a42c9ce5f663265952fb35d8514676f22c5c'
+            '34c2406eb4cd7f80291008753ee72d06e746d95a2c0c63a336b72ccecc4e0eba2449f5e19490d1b44836db6356a90f175f953305962c345d223063ded5abf14a')
+install="$pkgname.install"
+
+package() {
+  cd binaryninja
+
+  install -dm 755 "$pkgdir/usr/bin"
+  install -dm 755 "$pkgdir/usr/share/$pkgname"
+
+  install -Dm 644 $srcdir/LICENSE \
+    "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+
+  cp -a * "$pkgdir/usr/share/$pkgname"
+
+  cat > "$pkgdir/usr/bin/$pkgname" << EOF
+#!/bin/sh
+cd /usr/share/$pkgname
+exec ./binaryninja "\$@"
+EOF
+
+  chmod +x "$pkgdir/usr/bin/$pkgname"
+}
+

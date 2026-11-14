@@ -3,27 +3,29 @@
 
 pkgname=python-pypykatz
 _pkgname=pypykatz
-pkgver=0.5.2
-pkgrel=2
+pkgver=0.6.13
+pkgrel=1
 pkgdesc='Python implementation of Mimikatz.'
 url='https://github.com/skelsec/pypykatz'
 arch=('any')
 license=('MIT')
 depends=('python' 'python-minidump' 'python-minikerberos' 'python-aiowinreg'
-         'python-msldap' 'python-winsspi')
-makedepends=('python2-setuptools' 'python-setuptools')
+         'python-msldap' 'python-winacl' 'python-unicrypto' 'python-aiosmb'
+         'python-aesedb' 'python-asyauth' 'python-tqdm')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
 source=("https://github.com/skelsec/pypykatz/archive/refs/tags/$pkgver.tar.gz")
-sha512sums=('74a535e0a4bb4caf63d82c3dcdd0775dff1966597a9df1f01ea519e8b0f4a6277648744a52608e32c47db67ac89bf66609bc89f33ca9b8f91822e0bb35b2dff4')
+sha512sums=('6128698eef043b4f2795fd52289f8c3c582519d347fd9c9de90336b3bdd6e18f0e06271fc43a71207fc3e89de4e74ec2eab9437f7b17b27e48ebe0f873854643')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

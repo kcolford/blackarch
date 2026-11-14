@@ -2,28 +2,30 @@
 # See COPYING for license details.
 
 pkgname=python-google-cloud-core
-_pkgname=google-cloud-core
-pkgver=2.3.0
+_pkgname=google_cloud_core
+pkgver=2.8.0
 pkgrel=1
 pkgdesc='Google Cloud API client core library.'
 arch=('any')
 url='https://pypi.org/project/google-cloud-core/#files'
-license=('Apache')
-depends=('python')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/c3/b0/430438d8c48c8635c9292eaacfeab6d9c53331dfd7b5479abe607076fe57/$_pkgname-$pkgver.tar.gz")
-sha512sums=('503e96d47e64a84f3bcfec64b249e9f94c22f2c5345988fc107e16b3e299bae5b304adefc13c5baa647284f44bfdaf340b52f38afb06c87112c594650e57dee8')
+license=('Apache-2.0')
+depends=('python' 'python-google-api-core' 'python-google-auth'
+         'python-importlib-metadata')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('4b1aded56db8850ba8223a175a61b5b1df4ac462f8354b117ee671225f2e5414c6554243c2243afea62d5ef22c039cb5f378c1c674beeb7ffa581f9de517527d')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 \
-    --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

@@ -1,0 +1,28 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=ruby-unicode-confusable
+_gemname=${pkgname#ruby-}
+pkgver=1.13.0
+pkgrel=1
+pkgdesc='Unicode confusables helper in Ruby.'
+arch=('any')
+url='https://github.com/janlelis/unicode-confusable'
+license=('MIT')
+depends=('ruby')
+source=("https://rubygems.org/downloads/$_gemname-$pkgver.gem")
+noextract=("$_gemname-$pkgver.gem")
+sha512sums=('b03771e68b6b6e23a72c9f39f2d17724cf9ac6e015ac4f59022f4812d91b32eb11a19792c9ecf427f2b67613b62982a863ddee8061e595ae242266914d9bf8ed')
+
+package() {
+  _gemhome="$(gem env home)"
+
+  gem install --ignore-dependencies --no-user-install --no-document \
+    -i "$pkgdir/$_gemhome" -n "$pkgdir/usr/bin" "$_gemname-$pkgver.gem"
+
+  rm "$pkgdir/$_gemhome/cache/$_gemname-$pkgver.gem"
+
+  install -Dm 644 "$pkgdir/$_gemhome/gems/$_gemname-$pkgver/MIT-LICENSE.txt" \
+    "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+

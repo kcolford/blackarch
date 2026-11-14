@@ -4,15 +4,15 @@
 pkgbase=python-backoff
 pkgname=('python2-backoff' 'python-backoff')
 _pkgname=backoff
-pkgver=1.11.1
-pkgrel=3
+pkgver=2.2.1
+pkgrel=5
 pkgdesc='Function decoration for backoff and retry.'
 arch=('any')
 url='https://pypi.org/project/backoff/#files'
 license=('MIT')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/27/d2/9d2d0f0d6bbe17628b031040b1dadaee616286267e660ad5286a5ed657da/$_pkgname-$pkgver.tar.gz")
-sha512sums=('c497b9d25015283c612bae25c50ad67e7de92187d17d00db4e4913f9ffa887e71269ebb51b558a87c3d70f7cc2217f5dbe854299b48111f8129c014b1aa1cac1')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('051baabb07714a8a2248899546a5eb6322157d7c61ff4cd94037fa497081ac01927e49713319cb78be504171c06e920462e1ed740e8bbe086bfba952cb74145b')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

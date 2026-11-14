@@ -1,0 +1,27 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=ruby-zpng
+_pkgname=${pkgname#ruby-}
+pkgver=0.4.6
+pkgrel=1
+pkgdesc='Pure ruby PNG file manipulation and validation.'
+arch=('any')
+url='https://github.com/zed-0xff/zpng'
+license=('MIT')
+depends=('ruby' 'ruby-rainbow')
+source=("https://rubygems.org/downloads/$_pkgname-$pkgver.gem")
+noextract=("$_pkgname-$pkgver.gem")
+sha512sums=('46323f5b002b4c262a493df3ca7518b690f7dff66f0d36a2364ea2d0cab641fe4e928a309db96c1f7b489456aa6d1b57fc5222207aa985f5d9963fc0045deee9')
+
+package() {
+  _gemdir="$(ruby -e'puts Gem.default_dir')"
+
+  gem install --ignore-dependencies --no-user-install --no-document \
+    -i "$pkgdir/$_gemdir" -n "$pkgdir/usr/bin" "$_pkgname-$pkgver.gem"
+
+  rm "$pkgdir/$_gemdir/cache/$_pkgname-$pkgver.gem"
+
+  find "$pkgdir/$_gemdir/extensions/" -name *.so -delete
+}
+

@@ -3,7 +3,7 @@
 
 pkgname=python-dtfabric
 _pkgname=dtfabric
-pkgver=20220219
+pkgver=20260506
 pkgrel=1
 pkgdesc='Tooling for data type and structure management.'
 arch=('any')
@@ -11,8 +11,8 @@ url='https://pypi.org/project/dtfabric/#files'
 license=('Apache')
 depends=('python' 'python-pyaml')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/d7/bc/9ec141ac5f7542bd5de9ab76a376455511e87a8e5b2a5ec3109d07b71dcd/$_pkgname-$pkgver.tar.gz")
-sha512sums=('e60ef53af5cc5d5e199e11f2f60e9e81f33bedef65de39b113614327371e035cfbb0d98f7e03e500f2ba94034484e84c59bdd4f0c519e4c1d84b53402f45a6ad')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('637c20a6ba37ed85a49eb9d2d9c4e9fa09cd381ea9899466844312128c3e5a73d85ca6cbec1c8011f8437c18e5e16340bcca5b0471293758c5f570fa7464a818')
 
 build() {
   cd "$_pkgname-$pkgver"

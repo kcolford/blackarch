@@ -3,7 +3,7 @@
 
 pkgname=x3270
 _pkgname=suite3270
-pkgver=4.1ga12
+pkgver=4.5ga5
 pkgrel=1
 epoch=2
 pkgdesc='An IBM 3270 terminal emulator for the X Window System.'
@@ -14,8 +14,8 @@ depends=('openssl' 'libxaw')
 makedepends=('imake' 'openssl' 'libx11' 'libxaw' 'libxt' 'xbitmaps'
              'xorg-mkfontdir' 'xorg-bdftopcf' 'tcl')
 backup=('etc/x3270/ibm_hosts')
-source=("http://x3270.bgp.nu/download/04.01/suite3270-$pkgver-src.tgz")
-sha512sums=('8db32e2b0d998c9cc69a4301d8e078c0b268e23c006a408f0a9c5a999b361307f5c5d13f6f9a950556c144e726fdbc65566b5687698177b185c07c2f1593e95b')
+source=("https://downloads.sourceforge.net/project/x3270/x3270/$pkgver/suite3270-$pkgver-src.tgz")
+sha512sums=('4d80f4d31b88a5d99862b6a2c0fbb6c4f45ea55d393d306cd0cb7e989a85759da7df5afcda1ba24e6608ab9a61a5385d8d63786b5e83c6ba192d1b682546d02e')
 install="$pkgname.install"
 
 build() {
@@ -39,8 +39,8 @@ package() {
 
   make DESTDIR="$pkgdir" install
 
-  install -Dm 644 x3270/x3270-icon2.xpm \
-    "$pkgdir/usr/share/pixmaps/x3270-icon2.xpm"
+  #install -Dm 644 x3270/x3270-icon2.xpm \
+  #  "$pkgdir/usr/share/pixmaps/x3270-icon2.xpm"
   #install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 
   #chmod 644 "$pkgdir/etc/x3270/ibm_hosts"

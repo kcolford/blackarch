@@ -4,15 +4,15 @@
 pkgbase=python-libsmdev-python
 pkgname=('python2-libsmdev-python' 'python-libsmdev-python')
 _pkgname=libsmdev
-pkgver=20210418
-pkgrel=2
+pkgver=20260902
+pkgrel=1
 pkgdesc='Python bindings module for libsmdev.'
 arch=('x86_64' 'aarch64')
 url='https://pypi.python.org/pypi/libsmdev-python/'
 license=('LGPL3')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/a8/e3/c0835d76bfd26d7d7e75db9b700bd65a0019e948a959874845e57ca382c5/$_pkgname-$pkgver.tar.gz")
-sha512sums=('446e54d65238a66e55671db14ac0d15578f46bec70809570caa4c1f46d5fa01421704713e072297df230452c8c7592aa4d27409455c9839916b7de80399b6581')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('de9f4d7c78d68a6879aae8990e7419f9dc0116e004cdd52cc5c842f60657dd692d127a3efaea86d6303255c0d427e5817cfceb82aa6e4b610bf6f8e8b73686a8')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

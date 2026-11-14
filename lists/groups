@@ -1,4 +1,5 @@
 blackarch
+blackarch-ai
 blackarch-anti-forensic
 blackarch-automation
 blackarch-automobile
@@ -47,3 +48,4 @@ blackarch-voip
 blackarch-webapp
 blackarch-windows
 blackarch-wireless
+blackarch-wordlist

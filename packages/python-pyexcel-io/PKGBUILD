@@ -2,17 +2,19 @@
 # See COPYING for license details.
 
 pkgname=python-pyexcel-io
-_pkgname=pyexcel-io
-pkgver=0.6.6
+_pkgname=pyexcel_io
+pkgver=0.6.8
 pkgrel=1
 pkgdesc='A python library to read and write structured data in csv, zipped csvformat and to/from databases.'
 arch=('any')
 url='https://pypi.org/project/pyexcel-io/#files'
-license=('BSD')
+license=('BSD-3-Clause')
 depends=('python' 'python-lml')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/78/0d/8fea776e89e4b1657c818710623d55aa5807671bd7e04821efaee82bf847/$_pkgname-$pkgver.tar.gz")
-sha512sums=('612763b664b4f97678fb46b8c7de42cadb2be343eb5f199a26894235f4505c32d66cf945b2a77cf216bc74d6b3991d370d6c4f06c87440cf52324824c876c47e')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('8a512c31f24b3b92a019eff1e3b412b4169c3594cc37e97c806d189b168e6fe63cd395ce758dccb24154ff043e482ee79da8883e55edadc63930e37913af71d0')
 
 prepare() {
   cd "$_pkgname-$pkgver"
@@ -23,12 +25,12 @@ prepare() {
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

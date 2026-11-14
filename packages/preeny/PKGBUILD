@@ -2,7 +2,7 @@
 # See COPYING for license details.
 
 pkgname=preeny
-pkgver=112.b5e3afb
+pkgver=121.4da22d3
 pkgrel=1
 pkgdesc='Some helpful preload libraries for pwning stuff.'
 groups=('blackarch' 'blackarch-exploitation' 'blackarch-reversing')

@@ -2,27 +2,29 @@
 # See COPYING for license details.
 
 pkgname=python-eth-hash
-_pkgname=eth-hash
-pkgver=0.3.2
-pkgrel=2
+_pkgname=eth_hash
+pkgver=0.8.0
+pkgrel=1
 pkgdesc='The Ethereum hashing function, keccak256, sometimes (erroneously) called sha3.'
 url='https://pypi.org/project/eth-hash/#files'
 arch=('any')
 license=('MIT')
 depends=('python')
-makedepends=('python-setuptools' 'pandoc')
-source=("https://files.pythonhosted.org/packages/f6/3a/0b4f5bd7513d2fdcd3c196a2fcc1351a588e952a48356729450b0d54183f/$_pkgname-$pkgver.tar.gz")
-sha512sums=('519255ef7e798c9fcf454215ddba6b2cce4dc81380a5da3d74a6b4aca1c9112b679dca9708f222174b67ae3815aac8b7bb784341a410ee1ca573ea342e5f3b77')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('231ca10a99170a15d843e43cdb83322740439f9f97fa0ef516975d2cc9ae68a01f1da5bf8c6846eef0bf26f09aa2d0a7ae38e1f630dcd06fc0ac2cf5f7cc4cf1')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

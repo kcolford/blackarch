@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=autorecon
-pkgver=246.dadfc9b
-pkgrel=1
+pkgver=297.e7e98f6
+pkgrel=2
 pkgdesc='A multi-threaded network reconnaissance tool which performs automated enumeration of services.'
 groups=('blackarch' 'blackarch-automation' 'blackarch-recon'
         'blackarch-scanner')
@@ -11,7 +11,8 @@ arch=('any')
 url='https://github.com/Tib3rius/AutoRecon'
 license=('GPL3')
 depends=('python' 'python-colorama' 'python-toml' 'nmap' 'python-unidecode'
-         'feroxbuster' 'oscanner' 'tnscmd' 'redis' 'tnscmd' 'wkhtmltopdf')
+         'feroxbuster' 'oscanner' 'tnscmd' 'redis' 'tnscmd' 'wkhtmltopdf'
+         'python-appdirs' 'python-psutil' 'impacket')
 optdepends=('curl'
             'enum4linux'
             'gobuster'
@@ -41,7 +42,8 @@ package() {
 
   install -Dm 644 -t "$pkgdir/usr/share/doc/$pkgname/" README.md
 
-  rm README.md LICENSE poetry.lock poetry.toml pyproject.toml requirements.txt
+  rm -f README.md LICENSE poetry.lock poetry.toml pyproject.toml \
+    requirements.txt
 
   cp -a * "$pkgdir/usr/share/$pkgname/"
 

@@ -2,66 +2,44 @@
 # See COPYING for license details.
 
 pkgname=crackmapexec
-pkgver=780.e9bcd09
-_pyver=3.10
-pkgrel=1
-groups=('blackarch' 'blackarch-scanner' 'blackarch-exploitation' 'blackarch-windows')
+_pyver=3.14
+pkgver=v6.0.1.r198.gda472cb
+pkgrel=5
+epoch=3
+groups=('blackarch' 'blackarch-scanner' 'blackarch-exploitation'
+        'blackarch-windows')
 pkgdesc='A swiss army knife for pentesting Windows/Active Directory environments.'
 arch=('any')
 url='https://github.com/byt3bl33d3r/CrackMapExec'
-license=('custom:unknown')
-depends=('impacket' 'python' 'python-aiowinreg' 'python-asn1crypto'
-        'python-asysocks' 'python-bcrypt' 'python-beautifulsoup4' 'python-bs4'
-        'python-certifi' 'python-cffi' 'python-chardet' 'python-click'
-        'python-cryptography' 'python-dnspython' 'python-flask' 'python-future'
-        'python-greenlet' 'python-idna' 'python-itsdangerous' 'python-jinja'
-        'python-ldap3' 'ldapdomaindump' 'python-lsassy'
-        'python-markupsafe' 'python-minidump' 'python-minikerberos'
-        'python-msgpack' 'python-msldap' 'python-netaddr' 'python-ntlm-auth'
-        'python-paramiko' 'python-prompt_toolkit' 'python-pyasn1'
-        'python-pycparser' 'python-pycryptodomex' 'python-pylnk3'
-        'python-pynacl' 'python-pyopenssl' 'python-pypsrp' 'python-pypykatz'
-        'python-pyspnego' 'python-pytz' 'python-requests-ntlm' 'python-six'
-        'python-soupsieve' 'python-termcolor' 'python-terminaltables'
-        'python-tqdm' 'python-urllib3' 'python-wcwidth' 'python-werkzeug'
-        'python-winacl' 'python-winsspi' 'python-xmltodict' 'python-zope-event'
-        'python-zope-interface' 'python-pywerview' 'python-gevent'
-        'python-neo4j-driver' 'python-aiosmb' 'python-aioconsole')
-makedepends=('git' 'python-setuptools' 'python-poetry')
-source=("$pkgname::git+https://github.com/byt3bl33d3r/CrackMapExec.git")
-sha512sums=('SKIP')
-
-pkgver() {
-  cd $pkgname
-
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
-}
-
-prepare() {
-  cd $pkgname
-
-  make clean
-  git submodule init && git submodule update --recursive
-}
-
-build() {
-  cd $pkgname
-
-  poetry build
-  cd dist
-  mkdir -p cme_dir
-  tar zxvf $pkgname-*.tar.gz -C cme_dir
-}
+license=('BSD')
+depends=('netexec')
+makedepends=()
 
 package() {
-  cd "$pkgname/dist/cme_dir/$pkgname"-*
+  install -dm 755 "$pkgdir/usr/bin"
 
-  mkdir -p cme/hooks
-  python setup.py install --root="$pkgdir" -O1
+  cat > "$pkgdir/usr/bin/$pkgname" << EOF
+#!/bin/sh
+echo "CrackMapExec is deprecated and has been replaced by NetExec."
+echo "This binary is just an alias for netexec command."
+exec netexec "\$@"
+EOF
 
-  install -dm 755 \
-    "$pkgdir/usr/lib/python$_pyver/site-packages/cme/thirdparty/pywerview/"
-  touch \
-    "$pkgdir/usr/lib/python$_pyver/site-packages/cme/thirdparty/pywerview/.default"
+  cat > "$pkgdir/usr/bin/cme" << EOF
+#!/bin/sh
+echo "CrackMapExec is deprecated and has been replaced by NetExec."
+echo "This binary is just an alias for nxc command."
+exec nxc "\$@"
+EOF
+
+  cat > "$pkgdir/usr/bin/cmedb" << EOF
+#!/bin/sh
+echo "CrackMapExec is deprecated and has been replaced by NetExec."
+echo "This binary is just an alias for nxcdb command."
+exec nxcdb "\$@"
+EOF
+
+  chmod +x "$pkgdir/usr/bin/$pkgname" "$pkgdir/usr/bin/cme" \
+    "$pkgdir/usr/bin/cmedb"
 }
 

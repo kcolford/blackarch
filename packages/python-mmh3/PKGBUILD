@@ -2,27 +2,29 @@
 # See COPYING for license details.
 
 pkgname=python-mmh3
-_pkgname=mmh3
-pkgver=3.0.0
-pkgrel=2
+_pkgname=${pkgname#python-}
+pkgver=5.3.1
+pkgrel=1
 pkgdesc='Python wrapper for MurmurHash (MurmurHash3), a set of fast and robust hash functions.'
-arch=('any')
+arch=('x86_64' 'aarch64')
 url='https://pypi.org/project/mmh3/#files'
-license=('custom:CC0 1.0')
+license=('MIT')
 depends=('python')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/4a/54/78c7f04ceee4913cbe7b33e253867c1da2291c80dfa6062dc6aaabb6cef8/$_pkgname-$pkgver.tar.gz")
-sha512sums=('6d9182b1467b8108bab46f4d26e08d3557d2ccaa7e84a9029a03e8fe68f1933fbb4d336c08c239677510e7e7f7e5c95cb3f8075d6587fd0163f1abd59a6f3924')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('2ff1d2fac52abf917cbc4b20a5d3de3bdcc5ee1ea723ca13f88d80fc900d62deddf726fe487aa8b52d25de95b413c17a5df7f275d9043a764ae511a5b52bc6a8')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

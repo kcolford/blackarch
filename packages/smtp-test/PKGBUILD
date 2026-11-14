@@ -2,14 +2,14 @@
 # See COPYING for license details.
 
 pkgname=smtp-test
-pkgver=5.d8d8598
-pkgrel=1
+pkgver=6.151f636
+pkgrel=2
 groups=('blackarch' 'blackarch-scanner')
 pkgdesc='Automated testing of SMTP servers for penetration testing.'
 arch=('any')
 url='https://github.com/isaudits/smtp-test'
 license=('custom:unknown')
-depends=('python2' 'python2-dnspython' 'cutycapt' 'nmap')
+depends=('python2' 'python2-dnspython' 'python2-configparser' 'cutycapt' 'nmap')
 makedepends=('git')
 source=("git+https://github.com/isaudits/$pkgname.git")
 sha512sums=('SKIP')
@@ -17,7 +17,12 @@ sha512sums=('SKIP')
 pkgver() {
   cd $pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
 }
 
 package() {
@@ -39,5 +44,8 @@ exec python2 $pkgname.py "\$@"
 EOF
 
   chmod +x "$pkgdir/usr/bin/$pkgname"
+
+  mv "$pkgdir/usr/share/$pkgname/config/config.example" \
+    "$pkgdir/usr/share/$pkgname/config/default.example"
 }
 

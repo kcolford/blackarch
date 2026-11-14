@@ -2,7 +2,7 @@
 # See COPYING for license details.
 
 pkgname=blackarch-mirrorlist
-pkgver=20220110
+pkgver=20260403
 pkgrel=1
 pkgdesc='BlackArch Linux mirror list file.'
 groups=('blackarch')
@@ -12,7 +12,7 @@ license=('custom:unknown')
 depends=('pacman')
 backup=('etc/pacman.d/blackarch-mirrorlist')
 source=('https://www.blackarch.org/blackarch-mirrorlist')
-sha512sums=('19d48107dab549409bcca6b9dae19d4a1c3a3d874d1a4f923dbe50034e2932bc6fb4a00adafa785baf87388947f7b0464e6cf1b693660b65be544ae9bd52b11c')
+sha512sums=('c9e3bcdc0f332e9b521e762f31de2cf348bb2a185ee0ba7f8e9a599b7859ba3da3db0bb5b77a0937f776b313dae9af2efd027878e07f73452f31814e7f52ff1d')
 options=('!strip')
 
 package() {

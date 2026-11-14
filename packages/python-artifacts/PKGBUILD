@@ -3,7 +3,7 @@
 
 pkgname=python-artifacts
 _pkgname=artifacts
-pkgver=20220219
+pkgver=20260421
 pkgrel=1
 pkgdesc='Digital Forensics Artifact Repository.'
 url='https://pypi.org/project/artifacts/#files'
@@ -12,8 +12,8 @@ license=('Apache')
 depends=('python' 'python-yaml' 'python-pyaml' 'python-mock' 'python-pbr'
          'python-six')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/ba/a6/b408d58f1d9d1f3bb55544df49dbaed4b0067255348c050e83687b0db6c6/$_pkgname-$pkgver.tar.gz")
-sha512sums=('2b900ba6fb995506b598d577e2de07dd174753b7867ec098a2ff9123eb0c8af2622a0ac4afef685c97093595efbadfc8682d98873dcb77821f1f59e4ce3378cb')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('a1d960eedf004785c05d7ea5a60c6d5bc66629541adf3db8eef2ba29d5a58e65ce352ffb1ed1cf66ef8d33bfae196be8c3fb8844f71b8edd847fe972560f5b46')
 
 build() {
   cd "$_pkgname-$pkgver"

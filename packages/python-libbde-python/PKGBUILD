@@ -4,15 +4,15 @@
 pkgbase=python-libbde-python
 pkgname=('python2-libbde-python' 'python-libbde-python')
 _pkgname=libbde-python
-pkgver=20220121
+pkgver=20260916
 pkgrel=1
 pkgdesc='Library and tools to access the BitLocker Drive Encryption (BDE) encrypted volumes.'
 arch=('x86_64' 'aarch64')
 url='https://pypi.org/project/libbde-python/#files'
 license=('LGPL3')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/2d/02/8f3daf1495907bde0e3e71c6ea9088ef9da192a1ce74e8a2ebcce1bc8fcc/$_pkgname-$pkgver.tar.gz")
-sha512sums=('ab1ff0cbc723837027272dbf377650eff82c2187d1ac988294b434d907e6c0bca2b8f6b4a8c6bc4d427655cacb045977d7ae48ad2f6055d6414ac3ab0c61ad94')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('b0fe90bb5fc55627fcefb3c963027e07cbf2fc27fef59c02ee4ba83fd273b2e9304402981c491ca40336c00b867b49854376345a61a2e6259586651b181cda3b')
 
 package_python2-libbde-python() {
   depends=('python2')

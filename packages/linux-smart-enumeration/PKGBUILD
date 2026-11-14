@@ -2,7 +2,7 @@
 # See COPYING for license details.
 
 pkgname=linux-smart-enumeration
-pkgver=244.9e07dbe
+pkgver=300.b83a26f
 pkgrel=1
 pkgdesc='Linux enumeration tool for pentesting and CTFs with verbosity levels.'
 arch=('any')

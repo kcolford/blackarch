@@ -3,7 +3,7 @@
 
 pkgname=python-libfwsi-python
 _pkgname=libfwsi
-pkgver=20220123
+pkgver=20260522
 pkgrel=1
 pkgdesc='Python bindings module for libfwsi.'
 url='https://pypi.org/project/libfwsi-python/#files'
@@ -11,8 +11,8 @@ arch=('x86_64' 'aarch64')
 license=('LGPL3')
 depends=('python')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/63/c8/47a7197167a11da6a68704f08053057922c1f73a91441824207099310b90/$_pkgname-python-$pkgver.tar.gz")
-sha512sums=('2d1b60e67b33c3685338a33c7a81efdef173772e322e156f639aca2b9161fbf3f79dd429f1d0da9d76f9762c1a9305edc1e42019ae7aefbec5ab9eeb837540ef')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-python-$pkgver.tar.gz")
+sha512sums=('995c7ca9863c5a950d3a0d220b8db9dec2408459e86b09c7cd730d3f79e843f1a9f92398f520dd6104de2b1175cfc168cdf2681624446c0e933fc2728dcce14b')
 
 build() {
   cd "$_pkgname-$pkgver"

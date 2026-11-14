@@ -3,21 +3,28 @@
 
 pkgname=arptools
 pkgver=13.41cdb23
-pkgrel=1
+pkgrel=3
 pkgdesc='A simple tool about ARP broadcast, ARP attack, and data transmission.'
 groups=('blackarch' 'blackarch-networking')
 arch=('x86_64' 'aarch64')
 url='https://github.com/Lab-Zjt/ARPTools'
 license=('custom:unknown')
-depends=('linux-headers')
+depends=()
 makedepends=('git' 'cmake')
+optdepends=('linux-headers' 'linux-lts-headers' 'linux-hardened-headers'
+            'linux-rt-headers' 'linux-rt-lts-headers' 'linux-zen-headers')
 source=("$pkgname::git+https://github.com/Lab-Zjt/ARPTools.git")
 sha512sums=('SKIP')
 
 pkgver() {
   cd $pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
 }
 
 build() {

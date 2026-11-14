@@ -2,20 +2,19 @@
 # See COPYING for license details.
 
 pkgname=autopsy
-pkgver=4.19.2
-_skver=4.11.1
-pkgrel=3
+pkgver=4.23.1
+_skver=4.15.0
+pkgrel=1
 epoch=1
 pkgdesc='The forensic browser. A GUI for the Sleuth Kit.'
 groups=('blackarch' 'blackarch-forensic')
 arch=('x86_64')
 url='https://github.com/sleuthkit/autopsy'
-license=('MIT' 'Apache')
-depends=('java-runtime' 'testdisk' 'sleuthkit' 'sleuthkit-java' 'python2-pytsk3'
-         'python-pytsk3')
+license=('MIT' 'Apache-2.0')
+depends=('java-runtime' 'testdisk' 'sleuthkit' 'sleuthkit-java' 'python-pytsk3')
 source=("https://github.com/sleuthkit/autopsy/releases/download/$pkgname-$pkgver/$pkgname-$pkgver.zip"
         "$pkgname.desktop")
-sha512sums=('3e63cd25559e445627207171b084c51e06192ec5808f32e8ed4881f116652c806e75c1c4339ac6fd61631ec98f6fdbd75e8d279b2f52c856baed3fe53356c4fe'
+sha512sums=('0788059b6bf0913b4ab9e71c8cb95e56612f89f3535b8dac8c12b65a2d63c8bdfc81d6973d9cc3f3294687af8194bf1091647707ce32902299fb8132b58c6113'
             '08f98e0b4cc2f0791a4543ce77ec1a40214f9358973e2431e6b253d32e9954ee1998d61d234168699802a091de901b0661dffe1243ccb35fd299648d65b1907b')
 
 package() {

@@ -1,0 +1,39 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-wsnet
+_pkgname=${pkgname#python-}
+pkgver=0.1.7.r3.gcc626f6
+pkgrel=1
+pkgdesc='A lightweight protocol implementation to perform TCP and authentication proxying over websockets.'
+arch=('any')
+url='https://github.com/skelsec/wsnet'
+license=('custom:unknown')
+depends=('python' 'python-websockets' 'python-aiohttp')
+makedepends=('git' 'python-setuptools')
+source=("git+https://github.com/skelsec/$_pkgname.git")
+sha512sums=('SKIP')
+
+pkgver() {
+  cd ${pkgname#python-}
+
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
+}
+
+build() {
+  cd ${pkgname#python-}
+
+  python setup.py build
+}
+
+package() {
+  cd ${pkgname#python-}
+
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+}
+

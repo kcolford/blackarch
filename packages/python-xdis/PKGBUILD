@@ -3,8 +3,8 @@
 
 pkgname=python-xdis
 _pkgname=xdis
-pkgver=6.0.3
-_pyver=3.10
+pkgver=6.3.0
+_pyver=3.14
 pkgrel=1
 pkgdesc='Python cross-version byte-code disassembler and marshal routines.'
 url='https://pypi.org/project/xdis/#files'
@@ -12,8 +12,8 @@ arch=('any')
 license=('GPL2')
 depends=('python')
 makedepends=('python-setuptools' 'python-pip' 'python-wheel')
-source=("https://files.pythonhosted.org/packages/86/b9/f61410d0a7c3bbfa16d59e3b44c5dd3abe77575f0f51863fc1fee3294eb0/$_pkgname-$pkgver.tar.gz")
-sha512sums=('3a33030eaf8c629db155d74af7e261340f1d6d9b2a4db33763ebe417b3612678dbb221d0d8525daaf17465519bde9e8272a922737c3b5cd97f9a7ee454cc199c')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('5453e483d9e8f90cc9b21e79aa086ba7b6a5179fd6c9ba44054da78e03dfa845493336a9523a104823724f7010f9fa8bdf468bb227b7b5c726ba3e6232690aad')
 
 build() {
   cd "$_pkgname-$pkgver"

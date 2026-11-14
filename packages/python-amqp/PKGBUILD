@@ -1,0 +1,39 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-amqp
+_pkgname=amqp
+pkgver=5.4.1
+pkgrel=1
+pkgdesc='Low-level AMQP client for Python (fork of amqplib).'
+arch=('any')
+url='https://pypi.org/project/amqp/#files'
+license=('MIT')
+depends=('python' 'python-vine')
+makedepends=('python-build' 'python-pip' 'python-wheel')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('d71a16354757036e7c28f333f868c16348e7ca7de94af77d3d3e8b49510593b53cf53bb52d26ac13f14b37002149ed43d0f1bd94a88431b71ec427974c2c4041')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --outdir="$startdir/dist"
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  pip install \
+    --verbose \
+    --disable-pip-version-check \
+    --no-warn-script-location \
+    --ignore-installed \
+    --no-compile \
+    --no-deps \
+    --root="$pkgdir" \
+    --prefix=/usr \
+    --no-index \
+    --find-links="file://$startdir/dist" \
+    $_pkgname
+}
+

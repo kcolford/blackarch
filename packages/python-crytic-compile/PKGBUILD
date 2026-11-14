@@ -2,28 +2,29 @@
 # See COPYING for license details.
 
 pkgname=python-crytic-compile
-_pkgname=crytic-compile
-pkgver=0.2.2
+_pkgname=crytic_compile
+pkgver=0.4.2
 pkgrel=1
 pkgdesc='Library to help smart contract compilation.'
 arch=('any')
-url='https://github.com/crytic/crytic-compile'
-license=('GPL3')
-depends=('python' 'python-pysha3')
-makedepends=('python-setuptools')
+url='https://pypi.org/project/crytic-compile/#files'
+license=('GPL-3.0-or-later')
+depends=('python' 'python-pysha3' 'python-cbor2' 'python-pycryptodome')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
 options=(!emptydirs)
-source=("https://github.com/crytic/crytic-compile/archive/refs/tags/$pkgver.tar.gz")
-sha512sums=('525e230c47d055d5235c5860c075ecefc4efd61ff5e8ba883f721734aa3108480fd063f09aa40f36f218fe552c3ea14fdfaf639589824087441e54cd3660ff0a')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('67e21c4b44b63a6a801dcb1a616ee2cf028c36eefd69b496f345b325b51dbc165db8c273b755d7626747bb49873109f63491d710df6ab7869e4d00528cd3401a')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

@@ -2,27 +2,29 @@
 # See COPYING for license details.
 
 pkgname=python-httpx-socks
-_pkgname=httpx-socks
-pkgver=0.7.3
+_pkgname=httpx_socks
+pkgver=0.13.1
 pkgrel=1
 pkgdesc='Proxy (HTTP, SOCKS) transports for httpx.'
 url='https://pypi.org/project/httpx-socks/#files'
 arch=('any')
-license=('Apache')
+license=('Apache-2.0')
 depends=('python' 'python-httpx' 'python-python-socks')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/5c/99/ae63ba6eba344a601375a4e0ddab68fa9a711d28b62a98d890a4335c3160/$_pkgname-$pkgver.tar.gz")
-sha512sums=('ba78520ae79101178f39a6ab851cb848af46309882678436f84e56e87a05e141dc1809364e8618bc474998ed3fa639139649e13b98599c8190ad175dae71bfdf')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('4737507d839ba5687e1375bdf67348a1e0eee705e43634cd5b89a73f9883b377c223596af7d529031174fc3ea6746c02e8ae25d1fe41182b0e5e45019efd9708')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

@@ -3,7 +3,7 @@
 
 pkgname=python-dlib
 _pkgname=dlib
-pkgver=19.23.1
+pkgver=20.0.1
 pkgrel=1
 pkgdesc='A toolkit for making real world machine learning and data analysis applications.'
 arch=('x86_64' 'aarch64')
@@ -11,8 +11,8 @@ url='https://pypi.org/project/dlib/#files'
 license=('custom:unknown')
 depends=('python')
 makedepends=('python-setuptools' 'cmake')
-source=("https://files.pythonhosted.org/packages/f9/0f/74ba48d5136741feff3ceba90815034d34e10902cd16b44ae170226ff43e/$_pkgname-$pkgver.tar.gz")
-sha512sums=('4edf821eeb3abd14cc4eb1feeb2ff8476651e688a1b906226cb3161a04515ec4210b6700a9a9709e8b90965e54b1b9efea6b970d3d2134e1c35b52f560f72c4a')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('f169a204087f838b084e8d4a617153e49b164e7bad70fa5fe79a74172c97ea1115ae7fd23f43f1638834ef83fc5232d28087635c0ce744b90ea5e1bab31aec44')
 
 build() {
   cd "$_pkgname-$pkgver"

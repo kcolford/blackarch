@@ -3,8 +3,8 @@
 
 pkgname=python-cloudscraper
 _pkgname=cloudscraper
-pkgver=1.2.60
-pkgrel=1
+pkgver=1.2.71
+pkgrel=5
 pkgdesc="A Python module to bypass Cloudflare's anti-bot page."
 arch=('any')
 url='https://pypi.org/project/cloudscraper/'
@@ -14,8 +14,8 @@ optdepends=('python-js2py: alternative interpreter/solver'
             'nodejs: alternative interpreter/solver')
 makedepends=('python-build' 'python-installer' 'python-setuptools'
              'python-wheel')
-source=("https://files.pythonhosted.org/packages/55/96/993d645d27225e364b6305289c379662ed6c287b3a389f9dad88f4c41386/$_pkgname-$pkgver.tar.gz")
-sha512sums=('7d99953ed3b3cdec13294063fb87b74611a34600790d0a8d915a4f3cd6095f513a0db03968ddcf67c7844cbe6b3f70ed54bfaa5092d6a2d65aceedfc8aebbb67')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('e87f068371a4f9179267a5f0871ecfa5a425772d78bf02c2f8ad2800efe43f6bc75abf129dbf78a7cc8c41989c9651d8d84c3d27851e32541b15d729891b70dc')
 
 build(){
   cd "$_pkgname-$pkgver"

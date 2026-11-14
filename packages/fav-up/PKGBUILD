@@ -2,7 +2,7 @@
 # See COPYING for license details.
 
 pkgname=fav-up
-pkgver=47.30d9059
+pkgver=58.5ce68a8
 pkgrel=2
 pkgdesc='IP lookup by favicon using Shodan.'
 groups=('blackarch' 'blackarch-recon')

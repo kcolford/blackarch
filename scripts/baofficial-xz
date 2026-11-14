@@ -5,7 +5,8 @@
 do_release=true
 # override with -m
 #mirror='https://arch.unixpeople.org/'
-mirror="http://ftp.halifax.rwth-aachen.de/archlinux/"
+#mirror="http://ftp.halifax.rwth-aachen.de/archlinux/"
+mirror="https://mirror.ubrco.de/archlinux/"
 #mirror="http://mirror.archlinux.no"
 #mirror_arm="http://us.mirror.archlinuxarm.org"
 # override with -s
@@ -129,8 +130,8 @@ Server = $mirror/\$repo/os/$arch
 [extra]
 Server = $mirror/\$repo/os/$arch
 
-[community]
-Server = $mirror/\$repo/os/$arch
+#[community]
+#Server = $mirror/\$repo/os/$arch
 EOF
 #  fi
 

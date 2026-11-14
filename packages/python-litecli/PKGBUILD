@@ -3,7 +3,7 @@
 
 pkgname=python-litecli
 _pkgname=litecli
-pkgver=1.8.0
+pkgver=1.17.1
 pkgrel=1
 pkgdesc='CLI for SQLite Databases with auto-completion and syntax highlighting.'
 arch=('any')
@@ -11,27 +11,30 @@ url='https://pypi.org/project/litecli/#files'
 license=('BSD')
 depends=('python' 'python-click' 'python-pygments' 'python-prompt_toolkit'
          'python-sqlparse' 'python-configobj' 'python-cli-helpers')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/17/2f/16043e710f0c698bce9378acb64d05b9232b15ecc8c0173993e758aed1d0/$_pkgname-$pkgver.tar.gz")
-        'setup.py.patch')
-sha512sums=('0ab8305d2e2e58ff9b333f34b7db9024cf91f32566f7e71a53f5a20cca8c31401a71050125b3c532fbf336ec482dff48d309e0a92c8f844238506c62fc43367c')
-            '41a0339ec3650b756faed1ceaf83244db729a7c604bebf903cb1861f396f71df44c04eee0bb2cd2b7b99d8a82d0ac0ac5138d045e7b95cf309764f13a60755c2')
-
-prepare() {
-  cd "$_pkgname-$pkgver"
-
-  patch -p0 < ../setup.py.patch
-}
+makedepends=('python-pip' 'python-build' 'python-wheel')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('67945258564e650d395c5d86bde92cc1f92132763557d63937de7b53cd447018d80f606f9aa8f581a02f5f46da6fd3491f532c26418973acbe507ef8db6dd69f')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --outdir="$startdir/dist"
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  pip install \
+    --verbose \
+    --disable-pip-version-check \
+    --no-warn-script-location \
+    --ignore-installed \
+    --no-compile \
+    --no-deps \
+    --root="$pkgdir" \
+    --prefix=/usr \
+    --no-index \
+    --find-links="file://$startdir/dist" \
+    $_pkgname
 }
 

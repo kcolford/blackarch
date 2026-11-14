@@ -6,15 +6,15 @@
 
 pkgbase=python-pillow6
 pkgname=('python2-pillow6' 'python-pillow6')
-pkgver=6.2.1
-pkgrel=12
+pkgver=6.2.2
+pkgrel=5
 _appname=Pillow
 _py2basever=2.7
-_py3basever=3.9
+_py3basever=3.10
 pkgdesc='Python Imaging Library (PIL) fork. Python3 version.'
 arch=('x86_64' 'aarch64')
 url='https://python-pillow.github.io/'
-license=('BSD')
+license=('BSD-3-Clause')
 depends=('lcms2' 'libtiff' 'openjpeg2' 'libimagequant')
 optdepends=('freetype2: for the ImageFont module'
             'libraqm: for complex text scripts'
@@ -24,7 +24,7 @@ makedepends=('python-setuptools' 'python2-setuptools' 'freetype2' 'libraqm'
              'libwebp' 'tk')
 checkdepends=('python-pytest' 'python2-pytest')
 source=("https://files.pythonhosted.org/packages/source/P/$_appname/$_appname-$pkgver.tar.gz")
-sha512sums=('757bfdab2ba418195e96e696d2d111de3b38b6bafe4f6f94012f024f59c9bc8542fdab54f643eaf7b2867a9214db806e72eecbdd636bfceb55b47d3164f643ec')
+sha512sums=('517c971d4fb23a47466a7e8326c8c29291f7832d4521001c1898d6223ea25d4b0a8b7c8f7e78dd706f421229a8261b558b9fbdc43e47a0a2a7b2b4bbc1a21eff')
 
 prepare() {
   cp -r "$_appname-$pkgver" "$srcdir/python2-pillow"
@@ -45,6 +45,7 @@ prepare() {
   sed -i 's|/PIL/|/PIL6/|' Tests/import_all.py
   sed -i 's|100x100 at"|100x100 a"|' Tests/test_image.py
   sed -i 's|100x100 "|100x100"|' Tests/test_image.py
+  sed -i 's|PILLOW_VERSION = get_version()|PILLOW_VERSION = "6.2.2"|g' setup.py
 }
 
 build() {

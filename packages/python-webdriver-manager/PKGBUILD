@@ -1,0 +1,28 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-webdriver-manager
+_pkgname=webdriver_manager
+pkgver=4.1.2
+pkgrel=1
+pkgdesc='Library provides the way to automatically manage drivers for different browsers.'
+arch=('any')
+url='https://pypi.org/project/webdriver-manager/#files'
+license=('MIT')
+depends=('python' 'python-tqdm' 'python-requests' 'python-dotenv')
+makedepends=('python-setuptools')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('84466a198b6e7249a035ac488f062936ac96bbf95f99ba53744eb1ba4a6118067e0cda19ce865344c98216d0d08b935e6f715b9e6478e7541903017972ed74fa')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py build
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+}
+

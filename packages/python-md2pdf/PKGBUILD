@@ -1,0 +1,35 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-md2pdf
+_pkgname=${pkgname#python-}
+pkgver=3.1.1
+pkgrel=1
+pkgdesc='Python-based Markdown to PDF converter.'
+arch=('any')
+url='https://pypi.org/project/md2pdf'
+license=('MIT')
+depends=('python' 'python-weasyprint' 'python-docopt' 'python-markdown2')
+makedepends=('python-setuptools' 'python-pip')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('0362643f1adb67d0a3f165971473bba3bd5b6e9aa6afbeb7a8a6f0987006e9bc8bc361fef0b7bc563b7f13b81940a61d754f7e832a9b795fcbabd7ec4354553c')
+
+prepare() {
+  cd "$_pkgname-$pkgver"
+
+  sed -i 's/find_packages()/find_packages(exclude=["tests*"])/g' setup.py
+}
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py build
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+}
+

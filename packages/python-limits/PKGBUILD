@@ -3,26 +3,28 @@
 
 pkgname=python-limits
 _pkgname=limits
-pkgver=2.4.0
+pkgver=5.8.0
 pkgrel=1
 pkgdesc='Rate limiting utilities.'
 arch=('any')
 url='https://pypi.org/project/limits/#files'
 license=('MIT')
 depends=('python' 'python-six')
-makedepends=('python' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/f8/80/75fd44518566d0f3a17ed27a9d41f1d21c105cb562f685d6c55b2a199ff1/$_pkgname-$pkgver.tar.gz")
-sha512sums=('e80c3557f59e6f13b04d021f2e7cfc6e4da994731baec529d5609cefd4844c3f516833877955a294a9939fd0751b7c5d657faef9ba12f89b6abd141bf0c36c41')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel' 'python-hatchling' 'python-hatch-vcs')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('2ce8fa43d0e08694af18c1e0651091417c6558acaf094a7284762fe73253c4227d824fcafeb07b2a2311c0046faf04f6f6ac02bcf398b37ea2b3b59043aa5ac0')
 
 build() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 }
 

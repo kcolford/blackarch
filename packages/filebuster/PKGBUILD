@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=filebuster
-pkgver=88.e46e12e
-pkgrel=1
+pkgver=95.f2b04c7
+pkgrel=4
 pkgdesc='An extremely fast and flexible web fuzzer.'
 groups=('blackarch' 'blackarch-webapp' 'blackarch-fuzzer')
 arch=('any')

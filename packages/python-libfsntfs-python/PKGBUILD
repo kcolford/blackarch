@@ -3,7 +3,7 @@
 
 pkgname=python-libfsntfs-python
 _pkgname=libfsntfs
-pkgver=20220220
+pkgver=20260827
 pkgrel=1
 pkgdesc='Library and tools to access the Windows New Technology File System (NTFS).'
 url='https://pypi.org/project/libfsntfs-python/#files'
@@ -11,8 +11,8 @@ arch=('x86_64' 'aarch64')
 license=('LGPL3')
 depends=('python')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/dd/f2/c23917b60f6a1c488f2ace632b38a72045a5093caf3f5bcf872e37f042c1/$_pkgname-$pkgver.tar.gz")
-sha512sums=('4b6e83ae461333c6de7f02cfe73f380b4854dcf68e516a128832a407f2486f2951715298928edc28a9d89d3356d3e3ab882be44f0de3a968489b6de3bd796054')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('b28dd535d46850bb52f8860beb1f1dc9dc130a577c3df4601c5384a56fa6b6768cb4d32b2b209cf34afb9ed63d30e665d3e0e969c024051e39fad78c4629cd4d')
 
 build() {
   cd "$_pkgname-$pkgver"

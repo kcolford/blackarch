@@ -4,15 +4,15 @@
 pkgbase=python-filedepot
 pkgname=('python2-filedepot' 'python-filedepot')
 _pkgname=filedepot
-pkgver=0.8.0
-pkgrel=3
+pkgver=0.12.0
+pkgrel=1
 pkgdesc='Toolkit for storing files and attachments in web applications.'
 arch=('any')
 url='https://pypi.org/project/filedepot/#files'
 license=('MIT')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/71/0e/62179878898056bcda31f15c94b50a09a3c7dbd6e564a8fda375810dbd0d/$_pkgname-$pkgver.tar.gz")
-sha512sums=('118f825ed9bdaea8437c39aa231ac790a4b6bf1207499f994a799f175b876993ebfacef7a3057f4e8e1fd1d3c4cc00081e58e62e4c51c9922ae41e7f687eb1d8')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('57672dd4563938784c6b1c647965c44bb959529986f822a87bec6258dfac00283ee73a17e56b53ad3bbffcd09e745faf490edeb0aa7186acc8a940d62564ce83')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}

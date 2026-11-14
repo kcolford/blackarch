@@ -1,0 +1,37 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=goshs
+pkgver=2.1.0
+pkgrel=1
+pkgdesc='A single-binary file server for pentesters and sysadmins with HTTP/S, WebDAV, SFTP, SMB, LDAP, NTLM hash capture, DNS/SMTP callbacks and more.'
+arch=('x86_64' 'aarch64')
+groups=('blackarch' 'blackarch-misc')
+url='https://github.com/goshs-labs/goshs'
+license=('MIT')
+depends=()
+makedepends=('go')
+source=("$url/archive/refs/tags/v$pkgver.tar.gz")
+sha512sums=('0a6bbe1418e7b25fe47c7976198a26d23dd14dbad9f8bacc186da47467e752108a08a5636aff7db4ce17c5f52260ea834a67c36da18a8fde9c570991ea94fc0f')
+
+build() {
+  cd "$pkgname-$pkgver"
+
+  GOPATH="$srcdir" go mod download
+  GOPATH="$srcdir" CGO_ENABLED=0 go build \
+    -trimpath \
+    -buildmode=pie \
+    -mod=readonly \
+    -modcacherw \
+    -ldflags "-s -w" \
+    -o $pkgname .
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+
+  install -Dm 755 $pkgname "$pkgdir/usr/bin/$pkgname"
+  install -Dm 644 -t "$pkgdir/usr/share/doc/$pkgname/" README.md
+  install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+

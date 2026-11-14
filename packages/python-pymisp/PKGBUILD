@@ -1,33 +1,44 @@
 # This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
 # See COPYING for license details.
 
-pkgbase=python-pymisp
-pkgname=('python-pymisp')
+pkgname=python-pymisp
 _pkgname=pymisp
-pkgver=2.4.157
+pkgver=2.5.34.4
+_pyver=3.14
 pkgrel=1
 pkgdesc='Python API for MISP.'
 arch=('any')
 url='https://pypi.org/project/pymisp/#files'
 license=('BSD')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/17/4a/e9fed93eb0999e92293f972ac20cbc9b7bccce227d5a18262dbee104ddf2/$_pkgname-$pkgver.tar.gz")
-sha512sums=('693cd1e114e5b01966ff94686a4d33ef7ba6b9f865339d7cb42a77d85eb3c79abb4ebbeb2efd3660b2467942d95be3d6bd7c272541d858a69a6dd8752b5cb49a')
+depends=('python' 'python-six' 'python-dateutil' 'python-jsonschema'
+         'python-requests' 'python-deprecated')
+makedepends=('python-pip' 'python-build' 'python-wheel')
+optdepends=('python-virustotal-api: VirusTotal support')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('8eac07500aec98b8fe9cbf5c60a6c8c2fab60d9eaf6f6ef184ff92d5273c7c2d7b9875ce3724bc730a9e687f62bae4e9357961dde6f5a41b090f642d1e3d30fb')
 
 build() {
-  cd "$srcdir/$_pkgname-$pkgver"
-
-  python setup.py build
-}
-
-package_python-pymisp() {
-  depends=('python' 'python-six' 'python-dateutil' 'python-jsonschema'
-           'python-requests' 'python-deprecated')
-  optdepends=('python-virustotal-api: VirusTotal support')
-
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 \
-    --skip-build
+  python -m build --wheel --outdir="$startdir/dist"
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  pip install \
+    --verbose \
+    --disable-pip-version-check \
+    --no-warn-script-location \
+    --ignore-installed \
+    --no-compile \
+    --no-deps \
+    --root="$pkgdir" \
+    --prefix=/usr \
+    --no-index \
+    --find-links="file://$startdir/dist" \
+    $_pkgname
+
+  rm -rf "$pkgdir/usr/lib/python$_pyver/site-packages/"{README.md,CHANGELOG.txt}
 }
 

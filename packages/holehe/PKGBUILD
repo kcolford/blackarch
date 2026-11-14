@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=holehe
-pkgver=385.aba9857
-pkgrel=1
+pkgver=434.14da70f
+pkgrel=5
 pkgdesc='A tool for Efficiently finding registered accounts from emails.'
 arch=('any')
 groups=('blackarch' 'blackarch-social' 'blackarch-recon')

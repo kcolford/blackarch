@@ -1,0 +1,36 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-pymssql
+_pkgname=pymssql
+pkgver=2.4.6
+pkgrel=1
+pkgdesc='DB-API interface to Microsoft SQL Server for Python. (new Cython-based version).'
+arch=('x86_64' 'aarch64')
+url='https://pypi.org/project/pymssql/#files'
+license=('LGPL')
+depends=('python' 'freetds')
+makedepends=('python-installer' 'python-setuptools' 'python-build' 'python-wheel' 'cython'
+            'python-packaging' 'python-setuptools-scm' 'python-tomli')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('716f60a02b08916747d77c71cc642f7a67bf9b9c951e08e17242420e1b7622200c8f084c24ebae31f4647a82cdbd478cff0ea841bf8bd69f458be7a62e24cbe3')
+
+
+prepare() {
+  cd "$_pkgname-$pkgver"
+
+  sed -i '/standard-distutils/d' pyproject.toml
+}
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
+

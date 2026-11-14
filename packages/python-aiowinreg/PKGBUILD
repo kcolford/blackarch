@@ -3,7 +3,7 @@
 
 pkgname=python-aiowinreg
 _pkgname=aiowinreg
-pkgver=0.0.7
+pkgver=0.0.13
 pkgrel=2
 pkgdesc='Windows registry reader.'
 arch=('any')
@@ -11,8 +11,8 @@ url='https://pypi.org/project/aiowinreg/#files'
 license=('MIT')
 depends=('python')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/91/46/d2677902ca1d9672adaf774356f2bda6c2c11e8672b54e35b4f5c488915e/$_pkgname-$pkgver.tar.gz")
-sha512sums=('1c249b122c4e15ac98703aa7832885d5a8f41162c9ee2989733a4a6c26dc26e022b451b6bdb612670d778ea0a9318672ad3f9e1b610f5f3bd646e8847b771b20')
+source=("https://github.com/skelsec/aiowinreg/archive/refs/tags/$pkgver.tar.gz")
+sha512sums=('dd482b6e35ec8dd433870e71808c2b1aa602dac2d870dc4ce83d3828ab7333ac113190b7e67748d168db0367666973f627405e4ca337b03bbde982c77dfd41d6')
 
 build() {
   cd "$_pkgname-$pkgver"

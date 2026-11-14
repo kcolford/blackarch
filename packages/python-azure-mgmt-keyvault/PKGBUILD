@@ -3,16 +3,16 @@
 
 pkgname=python-azure-mgmt-keyvault
 _pkgname=azure-mgmt-keyvault
-pkgver=9.3.0
-pkgrel=2
+pkgver=14.1.0
+pkgrel=1
 pkgdesc='Microsoft Azure Key Vault Management Client Library for Python.'
 arch=('any')
 url='https://pypi.org/project/azure-mgmt-keyvault/#files'
 license=('MIT')
 depends=('python')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/cd/34/6091d8d2ad740cee9db16c6347cd1a315a4df470f08cfdfc0a958630e183/$_pkgname-$pkgver.zip")
-sha512sums=('e09ed4e3db1a96380e9766cc80de188d2474c724443efef719df785bbb1e21dabc65f00e443236363d29ec2095644dad8cc553e3e155880a47493d051496564b')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.zip")
+sha512sums=('59a0047c996a94897b7e9747f1f168f8c67644984352d2d22b368315d0594bc69065b5f06f122ebbfc55c7a661cae018db7efbabf990d683eea911e36d9ab616')
 
 build() {
   cd "$_pkgname-$pkgver"

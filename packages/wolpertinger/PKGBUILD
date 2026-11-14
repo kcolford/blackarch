@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=wolpertinger
-pkgver=2.58ef8e2
-pkgrel=1
+pkgver=3.683ad04
+pkgrel=4
 pkgdesc='A distributed portscanner.'
 groups=('blackarch' 'blackarch-scanner')
 arch=('x86_64' 'aarch64')
@@ -31,9 +31,9 @@ build() {
 
   if [[ "$CARCH" == "i686" || "$CARCH" == "x86_64" ]];
   then
-    ./configure --prefix=/usr
+    ./configure --prefix=/usr --sysconfdir=/etc
   else
-    ./configure --build=arm --prefix=/usr
+    ./configure --build=arm --prefix=/usr --sysconfdir=/etc
   fi
 
   make

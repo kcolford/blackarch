@@ -1,0 +1,49 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=impacket-ba
+_pkgname=impacket
+pkgver=0.13.0
+pkgrel=1
+pkgdesc='Collection of classes for working with network protocols.'
+url='https://github.com/fortra/impacket'
+arch=('any')
+groups=('blackarch' 'blackarch-exploitation' 'blackarch-networking')
+license=('Apache')
+depends=('python'
+         'python-pyasn1'
+         'python-pyasn1-modules'
+         'python-pycryptodomex'
+         'python-pyopenssl'
+         'python-six'
+         'python-ldap3'
+         'python-ldapdomaindump'
+         'python-flask'
+         'python-setuptools'
+         'python-charset-normalizer'
+)
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('a02324d4b3370f501a9f3cd24704eaf04ce17e5c01fe843ce5199d053186003e4c2dd5e4cd1674c1313c8c9ef3fd8738f2d8cc4351a97b1d3deb2d658102b182')
+provides=('impacket')
+conflicts=('impacket')
+
+prepare() {
+  cd "$_pkgname-$pkgver"
+
+  # This requirement is too hardcore and never aligned with AL version
+  sed -i 's/pyOpenSSL==24.0.0/pyOpenSSL>=24.0.0/' setup.py
+}
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py build
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+}
+

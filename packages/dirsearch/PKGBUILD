@@ -2,19 +2,19 @@
 # See COPYING for license details.
 
 pkgname=dirsearch
-pkgver=2094.ebf5d30
+pkgver=3033.b45e01bb
 pkgrel=1
 groups=('blackarch' 'blackarch-webapp' 'blackarch-scanner')
 pkgdesc='HTTP(S) directory/file brute forcer.'
 arch=('any')
 url='https://github.com/maurosoria/dirsearch'
 license=('GPL2')
-depends=('python' 'python-pysocks' 'python-jinja' 'python-certifi'
-         'python-urllib3' 'python-cryptography' 'python-cffi'
-         'python-defusedxml' 'python-markupsafe' 'python-pyopenssl'
-         'python-idna' 'python-chardet' 'python-charset-normalizer'
-         'python-requests' 'python-requests-ntlm' 'python-colorama'
-         'python-ntlm-auth' 'python-pyparsing')
+depends=('python' 'python-pysocks' 'python-jinja' 'python-defusedxml'
+         'python-pyopenssl' 'python-requests' 'python-requests-ntlm'
+         'python-colorama' 'python-ntlm-auth' 'python-beautifulsoup4'
+         'python-mysql-connector' 'python-psycopg' 'python-defusedcsv'
+         'python-requests-toolbelt' 'python-setuptools' 'python-httpx'
+         'python-httpx-ntlm')
 makedepends=('git')
 source=("git+https://github.com/maurosoria/$pkgname.git")
 sha512sums=('SKIP')
@@ -28,7 +28,7 @@ pkgver() {
 prepare() {
   cd $pkgname
 
-  sed -i '/save-logs-home/s/^# //g' default.conf
+  #sed -i '/save-logs-home/s/^# //g' default.conf
   sed -i 's/pyparsing>=3.0.6/pyparsing>=3.0.4/' requirements.txt
 }
 

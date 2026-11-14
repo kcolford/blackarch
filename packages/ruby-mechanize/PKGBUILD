@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=ruby-mechanize
-_gemname=mechanize
-pkgver=2.8.4
+_pkgname=mechanize
+pkgver=2.14.2
 pkgrel=1
 pkgdesc='Automates interaction with websites, handling cookies, redirects and forms.'
 arch=('any')
@@ -14,18 +14,18 @@ depends=('ruby' 'ruby-net-http-digest_auth' 'ruby-net-http-persistent'
          'ruby-webrobots' 'ruby-domain_name')
 makedepends=('ruby' 'ruby-rdoc')
 source=("https://rubygems.org/gems/$_pkgname-$pkgver.gem")
-noextract=("$_gemname-$pkgver.gem")
-sha512sums=('3b5a82d69070a8ad57e73527519efe91e5af8c9b3b75fcd38f598d37475ea8933b8799c12a6c59edd705936bdaab12fe1cd6cb024e165df99fe3cce18f0b7d01')
+noextract=("$_pkgname-$pkgver.gem")
+sha512sums=('14cbfd4bde1ca588708683e1023b5f77841e7aec2a27e3c7e6cecd56509dbcd7ca8c0a29799b59437668f04e4d9d061ce21a354214dc7746731efcfba9d9a8f3')
 
 package() {
   _gemdir="$(ruby -e 'puts Gem.default_dir')"
 
   if [[ $CARCH == arm* ]] ; then
     gem install --no-user-install --ignore-dependencies --no-rdoc --no-ri \
-      -i "$pkgdir$_gemdir" "$_gemname-$pkgver.gem"
+      -i "$pkgdir$_gemdir" "$_pkgname-$pkgver.gem"
   else
     gem install --ignore-dependencies --no-user-install -i "$pkgdir/$_gemdir" \
-      -n "$pkgdir/usr/bin" "$_gemname-$pkgver.gem"
+      -n "$pkgdir/usr/bin" "$_pkgname-$pkgver.gem"
   fi
 }
 

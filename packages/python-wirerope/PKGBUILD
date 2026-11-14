@@ -3,16 +3,16 @@
 
 pkgname=python-wirerope
 _pkgname=wirerope
-pkgver=0.4.6
-pkgrel=1
+pkgver=1.0.0
+pkgrel=2
 pkgdesc='Wrapper interface for python callable.'
 arch=('any')
 url='https://pypi.org/project/wirerope/'
 license=('BSD')
 depends=('python' 'python-six')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/26/70/9a64394b2c4770887939f789a20ef52f1264685af180d8fd660bb9888cf8/$_pkgname-$pkgver.tar.gz")
-sha512sums=('3df3e281003c717f4a36495173be5c1fa1a945e613e195a4a42250166e5a8d100f814b903caba63a37df17e05da30c26f0cc68f867a979046f0cf150871258df')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('ec6abc6a91731ae29b8597950365a5fdc92881696bba27db5823f0c3d95b07e3194523a421032cc6bbd8438404861cb212de51c3877bce50017eef259858ff36')
 
 build() {
   cd "$_pkgname-$pkgver"

@@ -2,11 +2,11 @@
 # See COPYING for license details.
 
 pkgname=suricata
-pkgver=6.0.4
-pkgrel=2
+pkgver=6.0.20
+pkgrel=1
 pkgdesc='An Open Source Next Generation Intrusion Detection and Prevention Engine.'
 arch=('x86_64' 'aarch64')
-url='https://suricata-ids.org/'
+url='https://suricata.io/download/'
 groups=('blackarch' 'blackarch-defensive' 'blackarch-ids')
 license=('GPL2')
 depends=('zlib' 'nss' 'jansson' 'libcap-ng' 'libnetfilter_queue' 'libnfnetlink'
@@ -16,16 +16,7 @@ makedepends=('cargo')
 optdepends=('snort: suricata can use rulesets provided by snort')
 backup=('etc/suricata/suricata.yaml')
 source=("http://openinfosecfoundation.org/download/$pkgname-$pkgver.tar.gz")
-sha512sums=('8dccea669e50758def06fe3f3e8d5048d76b27a80b5f96a7b56d2ab6e4da358d8b17ec2d764e1b53cc6a1334ee0b14191cc80f5dcf18cc4d804d5c530290adf0')
-
-prepare() {
-  cd "$pkgname-$pkgver"
-
-#  find "$srcdir" -type f -name '*.py' -exec \
-#    sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python2|' {} +
-#  find "$srcdir" -type f -name '*.py' -exec \
-#    sed -i 's|#!/usr/bin/python|#!/usr/bin/python2|' {} +
-}
+sha512sums=('4d47b7a2004963c1caade0e361fde4a650808a174f00c150ef82f649083de7880c391fe1eb23925ca520b6db830c2fdca9aa526b161361e1a391673b55becf15')
 
 build() {
   cd "$pkgname-$pkgver"

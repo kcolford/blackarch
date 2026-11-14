@@ -2,14 +2,15 @@
 # See COPYING for license details.
 
 pkgname=whatsmyname
-pkgver=987.fc1ff40
+pkgver=2934.0021b59
 pkgrel=1
 pkgdesc='Tool to perform user and username enumeration on various websites.'
 groups=('blackarch' 'blackarch-social' 'blackarch-recon')
 arch=('any')
 url='https://github.com/WebBreacher/WhatsMyName'
 license=('MIT')
-depends=('python' 'python-requests')
+depends=('python' 'python-requests' 'python-multidict' 'python-aiohttp'
+         'python-terminaltables')
 makedepends=('git')
 source=("$pkgname::git+https://github.com/WebBreacher/WhatsMyName.git")
 sha512sums=('SKIP')
@@ -17,7 +18,12 @@ sha512sums=('SKIP')
 pkgver() {
   cd $pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
 }
 
 package() {
@@ -36,7 +42,7 @@ package() {
   cat > "$pkgdir/usr/bin/$pkgname" << EOF
 #!/bin/sh
 cd /usr/share/$pkgname
-exec python3 web_accounts_list_checker.py "\$@"
+exec python whats_my_name.py "\$@"
 EOF
 
   chmod +x "$pkgdir/usr/bin/$pkgname"

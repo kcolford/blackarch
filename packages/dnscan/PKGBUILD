@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=dnscan
-pkgver=198.eba34de
-pkgrel=1
+pkgver=209.281721e
+pkgrel=3
 pkgdesc='A python wordlist-based DNS subdomain scanner.'
 arch=('any')
 groups=('blackarch' 'blackarch-scanner')

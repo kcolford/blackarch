@@ -2,7 +2,7 @@
 # See COPYING for license details.
 
 pkgname=aurebeshjs
-pkgver=66.2c93a1f
+pkgver=77.75a8fc6
 pkgrel=1
 pkgdesc='Translate JavaScript to Other Alphabets.'
 arch=('any')

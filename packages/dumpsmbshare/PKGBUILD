@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=dumpsmbshare
-pkgver=11.25e15e2
-pkgrel=1
+pkgver=23.1e5ceb1
+pkgrel=2
 pkgdesc='A script to dump files and folders remotely from a Windows SMB share.'
 groups=('blackarch' 'blackarch-misc')
 arch=('any')

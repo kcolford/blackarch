@@ -3,8 +3,8 @@
 
 pkgname=python-libesedb-python
 _pkgname=libesedb-python
-pkgver=20210424
-pkgrel=2
+pkgver=20260704
+pkgrel=1
 pkgdesc='Library and tools to access the Extensible Storage Engine (ESE) Database File (EDB) format.'
 url='https://pypi.org/project/libesedb-python/#files'
 arch=('x86_64' 'aarch64')
@@ -12,8 +12,8 @@ license=('LGPL3')
 depends=('python')
 makedepends=('python-setuptools')
 replaces=('python-libesedb')
-source=("https://files.pythonhosted.org/packages/d1/6c/7429ea8b3074704c45773c69bf164c35b05f8bd7ee642209c12769fb987f/$_pkgname-$pkgver.tar.gz")
-sha512sums=('368caad50c6bb6b8ff1b2dfae0d4740dae82728597c97b0b1250aa97efa0b7a4c9d1e5348786aae565acca5ddf788b8c1da241136280064b91c358ad0960a642')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('f595583e43f76553200492ba8c92214527ee88a1d6dc14ce245596fc7be36e5583eeb7d5b37d5191d4cb1be3f56f8399cdc3541eef55478b4d3514c946ebd971')
 
 build() {
   cd "libesedb-$pkgver"

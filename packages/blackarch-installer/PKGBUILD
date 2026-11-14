@@ -2,15 +2,15 @@
 # See COPYING for license details.
 
 pkgname=blackarch-installer
-pkgver=1.2.22
+pkgver=1.2.25
 pkgrel=1
 pkgdesc='The official BlackArch Linux installer.'
 arch=('any')
 url='https://github.com/BlackArch/blackarch-installer'
-license=('GPL3')
+license=('GPL-3.0-or-later')
 depends=('bash')
 source=("https://github.com/BlackArch/$pkgname/archive/v$pkgver.tar.gz")
-sha512sums=('7ea871f0d3991629c9151f101968b1af845e6e1225b27f479d8df28c5e1134e9ad5b36f66b069c168ad01f8e137560b9f956c50cac588f45ba68f06142f8efb4')
+sha512sums=('aa4360b0f3be76bc46d1b0f7addc5ad79d53922160838cc68976b66bd54f7586f8f0b09fe689787a16fcbd6932ff235665e44547a76970e51007b81c29490053')
 
 package() {
   cd "$pkgname-$pkgver"

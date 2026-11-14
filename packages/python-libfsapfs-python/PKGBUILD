@@ -3,16 +3,16 @@
 
 pkgname=python-libfsapfs-python
 _pkgname=libfsapfs-python
-pkgver=20210424
-pkgrel=2
+pkgver=20261030
+pkgrel=1
 pkgdesc='Library and tools to access the Apple File System (APFS).'
 url='https://pypi.org/project/libfsapfs-python/#files'
 arch=('x86_64' 'aarch64')
 license=('LGPL3')
 depends=('python')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/72/03/2a604ba004f8475e193d016d92dd3c7d4b9f5dffb730e0739c5794359a7f/$_pkgname-$pkgver.tar.gz")
-sha512sums=('5edb7e5fa7aa800f26288f1e44ee8183c4f22995389e3b8ee2140eddbd78fb43ac126269a04786064e3dc8cd8190a0d0b9b03a92874496a5af9cc5b5e1ccce43')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('b6d28ae9252b87cddf6044a45919b8f6d8b6eb785f924472e39e15d99293971882a494f8603038586b19f33ae3c47073b8f3d58fed0bb5dd0928f5bd21b545e7')
 
 build() {
   cd "libfsapfs-$pkgver"

@@ -1,0 +1,27 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=ruby-iostruct
+_pkgname=${pkgname#ruby-}
+pkgver=0.7.0
+pkgrel=1
+pkgdesc='A Struct that can read/write itself from/to IO-like objects.'
+arch=('any')
+url='https://rubygems.org/gems/iostruct'
+license=('MIT')
+depends=('ruby')
+source=("https://rubygems.org/gems/$_pkgname-$pkgver.gem")
+noextract=("$_pkgname-$pkgver.gem")
+sha512sums=('32755f2a33881fa1a1d5b61ac4066f0451a36d852048f5abcc4140adbe80c959c119a4bcece34e1f3f0d2ffebced53fdfec30c61bae702f895f5e3cb0549b103')
+
+package() {
+  _gemdir="$(ruby -e'puts Gem.default_dir')"
+
+  gem install --ignore-dependencies --no-user-install --no-document \
+    -i "$pkgdir/$_gemdir" -n "$pkgdir/usr/bin" "$_pkgname-$pkgver.gem"
+
+  rm "$pkgdir/$_gemdir/cache/$_pkgname-$pkgver.gem"
+
+  find "$pkgdir/$_gemdir/extensions/" -name *.so -delete
+}
+

@@ -2,42 +2,49 @@
 # See COPYING for license details.
 
 pkgname=s3scanner
-pkgver=419.6a67603
+_pkgname=s3Scanner
+pkgver=v3.1.1.r12.g64a00e2
 pkgrel=1
-pkgdesc='Scan for open S3 buckets and dump.'
+epoch=1
+pkgdesc='A tool to find open S3 buckets in AWS or other cloud providers.'
+arch=('x86_64' 'aarch64')
 groups=('blackarch' 'blackarch-scanner')
-arch=('any')
 url='https://github.com/sa7mon/S3Scanner'
 license=('MIT')
-depends=('python' 'aws-cli' 'python-pytest-xdist' 'python-boto3' 'python-sh')
-makedepends=('git' 'python-pip')
-source=("$pkgname::git+https://github.com/sa7mon/S3Scanner.git")
+depends=('glibc')
+makedepends=('git' 'go')
+source=("git+https://github.com/sa7mon/$_pkgname.git")
 sha512sums=('SKIP')
 
 pkgver() {
-  cd $pkgname
+  cd $_pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
+}
+
+build() {
+  cd $_pkgname
+
+  GOPATH="$srcdir" go mod download
+  GOPATH="$srcdir" go build \
+    -trimpath \
+    -buildmode=pie \
+    -mod=readonly \
+    -modcacherw \
+    -ldflags "-s -w" \
+    -o $pkgname .
 }
 
 package() {
-  cd $pkgname
+  cd $_pkgname
 
-  install -dm 755 "$pkgdir/usr/bin"
-  install -dm 755 "$pkgdir/usr/share/$pkgname"
-
+  install -Dm 755 $pkgname "$pkgdir/usr/bin/$pkgname"
   install -Dm 644 -t "$pkgdir/usr/share/doc/$pkgname/" README.md
-
-  rm README.md
-
-  cp -a * "$pkgdir/usr/share/$pkgname/"
-
-  cat > "$pkgdir/usr/bin/$pkgname" << EOF
-#!/bin/sh
-cd /usr/share/$pkgname
-exec python -m S3Scanner
-EOF
-
-  chmod +x "$pkgdir/usr/bin/$pkgname"
+  install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 

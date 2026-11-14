@@ -4,15 +4,15 @@
 pkgbase=python-wakeonlan
 pkgname=('python2-wakeonlan' 'python-wakeonlan')
 _pkgname=wakeonlan
-pkgver=2.1.0
-pkgrel=2
+pkgver=4.0.0
+pkgrel=1
 pkgdesc='A small python module for wake on lan.'
 arch=('any')
 url='https://pypi.org/project/wakeonlan/#files'
 license=('WTFPL')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/dc/40/eac9c66d5934ef99c69593cf32b75f6769aa05c034a1d9a6f3285a34120f/$_pkgname-$pkgver.tar.gz")
-sha512sums=('56ad19aab20b745e210f84edc90195b400e21b5037b5bbc196e658b1e9df00bbed14c8e68deb1021bafd53205015a666809dc24f55b61d9bb3157b1b32fd9eb3')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('1bbcffb9fb4a7313d4e455aaa7012acbc91111280ef7edf2f33a7eec4e9c49e59fcf4999fa265f3b5e4c04fe65b5e25608b90b4662ed3bca1a00efd9f1de5265')
 
 prepare() {
   cp -a "$_pkgname-$pkgver"{,-2}
@@ -33,8 +33,7 @@ package_python2-wakeonlan() {
 
   cd "$_pkgname-$pkgver-2"
 
-  python2 setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 \
-    --skip-build
+  python2 setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
 
   mv "$pkgdir/usr/bin/$_pkgname" "$pkgdir/usr/bin/${_pkgname}2"
 }
@@ -44,7 +43,6 @@ package_python-wakeonlan() {
 
   cd "$_pkgname-$pkgver"
 
-  python setup.py install --prefix=/usr --root="$pkgdir" --optimize=1 \
-    --skip-build
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
 }
 

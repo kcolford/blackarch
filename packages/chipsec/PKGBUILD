@@ -2,45 +2,43 @@
 # See COPYING for license details.
 
 pkgname=chipsec
-pkgver=1408.6f6de364
+pkgver=2.0.9.r11.g2545706
 pkgrel=1
-epoch=4
+epoch=5
 pkgdesc='Platform Security Assessment Framework.'
 groups=('blackarch' 'blackarch-hardware' 'blackarch-binary' 'blackarch-forensic'
         'blackarch-scanner' 'blackarch-fuzzer')
 arch=('x86_64' 'aarch64')
 url='https://github.com/chipsec/chipsec'
 license=('GPL2')
-depends=('dkms' 'libelf' 'linux-headers' 'nasm' 'python' 'python-lxml')
-makedepends=('git' 'python-setuptools')
-source=("git+https://github.com/chipsec/$pkgname.git"
-        'Makefile.patch')
-sha512sums=('SKIP'
-            'b3bd500b37871e8c0c9132613fd9254014c5288b24d7e88acacc695dbb3ff2d384c72186536e2fe5225c31b438f5d08fad991503c9335021cf03c3ed8c29e85f'
-           )
+depends=('dkms' 'libelf' 'nasm' 'python' 'python-lxml')
+makedepends=('git' 'python-setuptools' 'linux-headers')
+optdepends=('linux-headers' 'linux-lts-headers' 'linux-hardened-headers'
+            'linux-rt-headers' 'linux-rt-lts-headers' 'linux-zen-headers')
+source=("git+https://github.com/chipsec/$pkgname.git")
+sha512sums=('SKIP')
+
 pkgver() {
   cd $pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
-}
-
-prepare() {
-  cd "$pkgname/drivers/linux"
-
-  #patch -Np0 < "$srcdir/Makefile.patch"
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
 }
 
 build() {
   cd $pkgname
 
-  python setup.py build
+  python setup.py build --skip-driver
 }
 
 package() {
   cd $pkgname
 
-  python setup.py install --prefix=/usr --root="$pkgdir" -O1 --skip-build \
-    --skip-driver
+  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
 
   install -Dm 644 drivers/linux/dkms.conf \
     "$pkgdir/usr/src/$pkgname-$pkgver/dkms.conf"

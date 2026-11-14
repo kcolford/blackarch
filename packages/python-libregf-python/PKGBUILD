@@ -4,15 +4,15 @@
 pkgbase=python-libregf-python
 pkgname=('python2-libregf-python' 'python-libregf-python')
 _pkgname=libregf-python
-pkgver=20220131
+pkgver=20260526
 pkgrel=1
 pkgdesc='Python bindings module for libregf.'
 arch=('x86_64' 'aarch64')
 url='https://pypi.python.org/pypi/libregf-python/'
 license=('LGPL3')
 makedepends=('python2-setuptools' 'python-setuptools')
-source=("https://files.pythonhosted.org/packages/eb/ff/0abfcd86cef5553a4ed1211898c8fdbe4f1ed70e564e83cb1b4721366663/$_pkgname-$pkgver.tar.gz")
-sha512sums=('9b773534dc53435b6ad276440b65db1d009da396fbdc5855dcf10944563eb1fc2b3969b3a1973a784414e26a93f8a7ed86a3f9e0c23a86ea5e2a04c834b0283f')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('b3bddd07f6d21b6257cfd9c647c6685b15cd1769da11ac4246e2ce37685c19ac2ae435f863712347a160ce187a96883923cb3c941414cc5d3c1541ce1146fbad')
 
 package_python2-libregf-python() {
   depends=('python2')

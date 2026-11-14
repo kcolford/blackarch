@@ -1,0 +1,29 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-primp
+_pkgname=${pkgname#python-}
+pkgver=2.0.1
+pkgrel=1
+pkgdesc='HTTP client that can impersonate web browsers.'
+arch=('x86_64' 'aarch64')
+url='https://github.com/deedy5/primp/tree/main/crates/primp-python'
+license=('MIT')
+depends=('python')
+makedepends=('python-build' 'python-wheel' 'python-installer' 'python-setuptools' 'python-maturin')
+options=(!emptydirs)
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('58cc70812603e7b35c9c22225578be76af827d3446dc509daea8b0a32166e929be2eed719e473042be3e159b2fe25f80064cef669413398ac6a88e7902a9e2e8')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
+

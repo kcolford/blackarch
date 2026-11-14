@@ -2,22 +2,28 @@
 # See COPYING for license details.
 
 pkgname=adidnsdump
-pkgver=23.7422086
+pkgver=v1.6.0.r0.gc6bff9a
 pkgrel=1
+epoch=1
 pkgdesc='Active Directory Integrated DNS dumping by any authenticated user.'
 groups=('blackarch' 'blackarch-recon')
 arch=('any')
 url='https://github.com/dirkjanm/adidnsdump'
 license=('custom:unknown')
 depends=('python' 'python-ldap3' 'python-dnspython' 'python-future' 'impacket')
-makedepends=('git')
+makedepends=('git' 'python-setuptools')
 source=("$pkgname::git+https://github.com/dirkjanm/$pkgname.git")
 sha512sums=('SKIP')
 
 pkgver() {
   cd $pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
 }
 
 build() {

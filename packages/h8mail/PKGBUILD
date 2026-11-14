@@ -2,16 +2,15 @@
 # See COPYING for license details.
 
 pkgname=h8mail
-pkgver=330.0a371eb
-_pyver=3.10
-pkgrel=3
+pkgver=344.ee31c8f
+_pyver=3.14
+pkgrel=11
 pkgdesc='Email OSINT and password breach hunting.'
 arch=('any')
 groups=('blackarch' 'blackarch-recon' 'blackarch-social')
 url='https://github.com/khast3x/h8mail'
 license=('custom:unknown')
-depends=('python' 'python-requests' 'python-python-cli-ui' 'python-cfscrape'
-         'nodejs')
+depends=('python' 'python-requests')
 makedepends=('git' 'python-setuptools')
 source=("git+https://github.com/khast3x/$pkgname.git")
 sha512sums=('SKIP')

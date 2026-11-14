@@ -3,7 +3,7 @@
 
 pkgname=python-dfdatetime
 _pkgname=dfdatetime
-pkgver=20220131
+pkgver=20261027
 pkgrel=1
 pkgdesc='Digital Forensics Date and Time.'
 arch=('any')
@@ -11,8 +11,8 @@ url='https://pypi.org/project/dfdatetime/'
 license=('Apache')
 depends=('python')
 makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/41/62/ef7564ab1ede7ff254dcbde4de1ce735f375ea9796785c51cb9e703790a8/$_pkgname-$pkgver.tar.gz")
-sha512sums=('3b7dff0036cd6361f92504946f5f397270330612bbf9993b3f2eeff8fa6233cfd7170413a975b04db5c32c11b0c87901ce3253076a31727794f7ec05a14e9b98')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('56f1fc3d7acca375b1015520ba047b77b26206912b8249a715fa93e47245b711bc1edbff44cc4c31d435ed7f65028d037dcfc35c70df0d327101ff9eb966a9e9')
 
 build() {
   cd "$_pkgname-$pkgver"

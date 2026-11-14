@@ -1,0 +1,39 @@
+# This file is part of BlackArch Linux ( https://www.blackarch.org/ ).
+# See COPYING for license details.
+
+pkgname=python-cxxheaderparser
+_pkgname=cxxheaderparser
+pkgver=2.2.0
+pkgrel=1
+pkgdesc='Parse C++ header files and generate a data structure representing the class.'
+arch=('any')
+url='https://pypi.org/project/cxxheaderparser/#files'
+license=('BSD-3-Clause')
+depends=('python')
+makedepends=('python-build' 'python-pip' 'python-wheel')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('0cb4d62a6bc7d23dce2246f5491c29628879c5a1eeb5bfc3d32811b6f3f79547973868a10c2f31f2894fd30ebb7f7a0c8abfbc1f599674045591d291a2022860')
+
+build() {
+  cd "$_pkgname-$pkgver"
+
+  python -m build --wheel --outdir="$startdir/dist"
+}
+
+package() {
+  cd "$_pkgname-$pkgver"
+
+  pip install \
+    --verbose \
+    --disable-pip-version-check \
+    --no-warn-script-location \
+    --ignore-installed \
+    --no-compile \
+    --no-deps \
+    --root="$pkgdir" \
+    --prefix=/usr \
+    --no-index \
+    --find-links="file://$startdir/dist" \
+    $_pkgname
+}
+

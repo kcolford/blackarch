@@ -3,21 +3,27 @@
 
 pkgname=aws-extender-cli
 pkgver=17.a351154
-pkgrel=3
+pkgrel=13
 groups=('blackarch' 'blackarch-scanner' 'blackarch-webapp')
 pkgdesc='Script to test S3 buckets as well as Google Storage buckets and Azure Storage containers for common misconfiguration issues.'
 arch=('any')
 url='https://github.com/VirtueSecurity/aws-extender-cli'
 license=('MIT')
-depends=('python' 'python-boto' 'python-boto3')
+depends=('python' 'python-virtualenv')
 makedepends=('git')
 source=("git+https://github.com/VirtueSecurity/$pkgname.git")
 sha512sums=('SKIP')
+install="$pkgname.install"
 
 pkgver() {
   cd $pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
 }
 
 package() {
@@ -35,6 +41,7 @@ package() {
 
   cat > "$pkgdir/usr/bin/$pkgname" << EOF
 #!/bin/sh
+source /usr/share/$pkgname/venv/bin/activate
 exec python /usr/share/$pkgname/aws_extender_cli.py "\$@"
 EOF
 

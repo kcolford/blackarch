@@ -3,8 +3,8 @@
 
 pkgname=python-pyattck
 _pkgname=pyattck
-pkgver=5.4.0
-pkgrel=1
+pkgver=7.1.2
+pkgrel=5
 pkgdesc='A Python Module to interact with the Mitre ATT&CK Framework.'
 arch=('any')
 url='https://pypi.org/project/pyattck/#files'
@@ -13,8 +13,8 @@ depends=('python' 'python-requests' 'python-pendulum' 'python-pyfiglet'
          'python-pyaml' 'python-pillow' 'python-fire')
 makedepends=('python-setuptools')
 options=(!emptydirs)
-source=("https://files.pythonhosted.org/packages/c3/a0/9edc420423788a7dfb6c3c64c87265726d03a48818d10ef32e43a3c06555/$_pkgname-$pkgver.tar.gz")
-sha512sums=('6cba0df0e79d39a091947a1e143604af5fda659784e926b22c936d92b1e2d9cb9ae8bbbef2d627566a4e857210b275a76008219e8427e1fff61478eb61f4e559')
+source=("https://files.pythonhosted.org/packages/source/${_pkgname::1}/$_pkgname/$_pkgname-$pkgver.tar.gz")
+sha512sums=('89f04b121cc56e09a9569a1be3970c68cc4c207cdfe277ac2eff78376a8f7709cc2e25965fb87a60828d799a4ca91c033cd1b65442f0d6e00f86cf478bb14181')
 
 build() {
   cd "$_pkgname-$pkgver"

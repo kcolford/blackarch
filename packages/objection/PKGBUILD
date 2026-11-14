@@ -2,9 +2,9 @@
 # See COPYING for license details.
 
 pkgname=objection
-pkgver=1.11.0
-_pyver=3.10
-pkgrel=4
+pkgver=1.12.5
+_pyver=3.14
+pkgrel=1
 pkgdesc='Instrumented Mobile Pentest Framework.'
 groups=('blackarch' 'blackarch-mobile' 'blackarch-reversing' 'blackarch-binary')
 arch=('any')
@@ -13,21 +13,22 @@ license=('custom:unknown')
 depends=('python' 'python-frida' 'python-frida-tools' 'python-prompt_toolkit'
          'python-click' 'python-tabulate' 'python-requests' 'python-flask'
          'python-delegator.py' 'python-pexpect' 'python-litecli' 'python-semver'
-         'python-sqlparse')
-makedepends=('python-setuptools')
-source=("https://files.pythonhosted.org/packages/94/69/7539d5e62dda210fd799405aa4e7635ba23474a8f530465f57ddabf4863b/$pkgname-$pkgver.tar.gz")
-sha512sums=('40b2feb140c9d33898c649a640b525d683adf823ca6ef9a7845a89055f40db753b4d91442cbb0e48c4cfe6913ca36ee9ec3fc78b9001539752b3c8a0bacc90c4')
+         'python-sqlparse' 'python-packaging' 'python-pygments')
+makedepends=('python-build' 'python-installer' 'python-setuptools'
+             'python-wheel')
+source=("https://files.pythonhosted.org/packages/source/${pkgname::1}/$pkgname/$pkgname-$pkgver.tar.gz")
+sha512sums=('e590ed48d0564c83e9185c1a19456c2b4853400c9bd918197921a64ee62f9603f557185bf84320c0cd20d66dd47d98edaa9add721ce161e008113449187f7a2f')
 
 build() {
   cd "$pkgname-$pkgver"
 
-  python setup.py build
+  python -m build --wheel --no-isolation
 }
 
 package() {
   cd "$pkgname-$pkgver"
 
-  python setup.py install --root="$pkgdir" --prefix=/usr -O1 --skip-build
+  python -m installer --destdir="$pkgdir" dist/*.whl
 
   rm -rf "$pkgdir/usr/lib/python$_pyver/site-packages/tests"
 }

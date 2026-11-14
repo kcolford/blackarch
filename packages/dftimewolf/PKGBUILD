@@ -2,15 +2,17 @@
 # See COPYING for license details.
 
 pkgname=dftimewolf
-pkgver=466.348bdbf9
+pkgver=901.cec07dd
 pkgrel=1
-pkgdesc='Framework for orchestrating forensic collection, processing and data export .'
+epoch=1
+_pyver=3.14
+pkgdesc='Framework for orchestrating forensic collection, processing and data export.'
 arch=('any')
 groups=('blackarch' 'blackarch-forensic')
 url='https://github.com/log2timeline/dftimewolf'
-license=('Apache')
-depends=('python')
-makedepends=('git' 'python-setuptools' 'python-pip')
+license=('Apache-2.0')
+depends=('python' 'python-poetry')
+makedepends=('git')
 source=("git+https://github.com/log2timeline/$pkgname.git")
 sha512sums=('SKIP')
 install="$pkgname.install"
@@ -18,27 +20,44 @@ install="$pkgname.install"
 pkgver() {
   cd $pkgname
 
-  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  ( set -o pipefail
+    git describe --long --tags --abbrev=7 2>/dev/null |
+      sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "%s.%s" "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short=7 HEAD)"
+  )
+}
+
+prepare() {
+  cd $pkgname
+
+  sed -i 's|>=3.11,<=3.13|>=3.11,<=3.15|g' pyproject.toml
+
+  rm poetry.lock
 }
 
 package() {
   cd $pkgname
 
   install -dm 755 "$pkgdir/usr/bin"
-  install -Dm 644 requirements.txt "$pkgdir/usr/share/$pkgname/requirements.txt"
+  install -dm 755 "$pkgdir/usr/share/$pkgname"
+
   install -Dm 644 -t "$pkgdir/usr/share/doc/$pkgname/" *.md docs/*.md
+
   rm -rf LICENSE *.md docs/*.md .gitignore .pylintrc .travis.yml .style.yapf \
-    .isort.cfg appveyor.yml run_tests.py
+    .isort.cfg appveyor.yml run_tests.py docker tests mkdocs.yml *.ini \
+    requirements*.txt
 
   cp -a * "$pkgdir/usr/share/$pkgname/"
 
   cat > "$pkgdir/usr/bin/$pkgname" << EOF
 #!/bin/sh
-cd /usr/share/$pkgname
-source venv/bin/activate
-exec python $pkgname/cli/${pkgname}_recipes.py "\$@"
+poetry config cache-dir "/usr/share/$pkgname"
+poetry env use /usr/share/$pkgname/.venv/bin/python$_pyver \\
+  --directory /usr/share/$pkgname
+poetry run --directory "/usr/share/$pkgname" $_pkgname_cmd "\$@"
 EOF
 
-  chmod a+x "$pkgdir/usr/bin/$pkgname"
+  chmod +x "$pkgdir/usr/bin/$pkgname"
 }
 

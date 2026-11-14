@@ -2,8 +2,8 @@
 # See COPYING for license details.
 
 pkgname=slither
-pkgver=2533.e3b75c00
-_pyver=3.10
+pkgver=5205.97c1d10d8
+_pyver=3.14
 pkgrel=1
 epoch=1
 pkgdesc='Solidity static analysis framework written in Python 3.'
